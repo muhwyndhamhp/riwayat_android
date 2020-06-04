@@ -23,7 +23,7 @@ class MemberRepository(application: Application) : CoroutineScope {
 
     fun getAllMember() = memberDao?.getAllMember()
 
-    fun getMember(phoneNumber: Int) = memberDao?.getMember(phoneNumber)
+    fun getMember(phoneNumber: String) = memberDao?.getMember(phoneNumber)
 
     fun setMember(member: Member) {
         launch { setMemberBG(member) }

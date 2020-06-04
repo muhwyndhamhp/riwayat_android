@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "member_table")
 data class Member (
     @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "phoneNumber") var phoneNumber: Int = 0,
+    @ColumnInfo(name = "phoneNumber") var phoneNumber: String = "",
     @ColumnInfo(name = "memberName") var memberName: String = ""
 )

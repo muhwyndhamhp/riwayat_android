@@ -11,10 +11,10 @@ interface MemberDao {
     fun setMember(member: Member)
 
     @Query("SELECT * FROM member_table ORDER BY memberName ASC")
-    fun getAllMember(): LiveData<List<Member>>
+    fun getAllMember(): LiveData<MutableList<Member>>
 
     @Query("SELECT * FROM member_table WHERE phoneNumber = :phoneNumber")
-    fun getMember(phoneNumber: Int): LiveData<Member>
+    fun getMember(phoneNumber: String): LiveData<Member>
 
     @Query("DELETE FROM member_table")
     fun deleteAll()
