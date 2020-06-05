@@ -1,13 +1,15 @@
 package io.muhwyndhamhp.riwayat.database
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
+import androidx.room.*
 import androidx.room.RoomDatabase
 import io.muhwyndhamhp.riwayat.dao.MemberDao
+import io.muhwyndhamhp.riwayat.model.Case
+import io.muhwyndhamhp.riwayat.model.CaseNote
 import io.muhwyndhamhp.riwayat.model.Member
 
-@Database(entities = [Member::class], version = 1, exportSchema = false)
+@Database(entities = [Member::class, Case::class, CaseNote::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class RoomDatabase : RoomDatabase() {
     abstract fun memberDao(): MemberDao
 
