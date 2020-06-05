@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.adapter.MemberRVAdapter
+import io.muhwyndhamhp.riwayat.helper.FirebaseUploadStatus
 import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.viewmodel.ManageMemberViewModel
 import kotlinx.android.synthetic.main.activity_manage_member.*
@@ -28,10 +29,13 @@ class ManageMemberActivity : AppCompatActivity() {
             manageMemberViewModel?.insertMember(
                 et_member_name.text.toString(),
                 et_member_phone.text.toString()
-            )?.observe(this@ManageMemberActivity, Observer { isInserted ->
-                if (isInserted) setPostInsertedState()
-                else {
-                    showToast("Kolom tidak boleh kosong!")
+            )?.observe(this@ManageMemberActivity, Observer { insertStatus ->
+                when (insertStatus) {
+                    FirebaseUploadStatus.COMPLETED -> setPostInsertedState()
+                    FirebaseUploadStatus.WRONG_INPUT -> showToast("Kolom tidak boleh kosong!")
+                    FirebaseUploadStatus.FAILED -> showToast("Gagal mengupload data, mengulang...")
+                    FirebaseUploadStatus.CONFLICT -> showToast("Anggota dengan nomor telepon tersebut sudah ada!")
+                    else -> showToast("Mengupload data...")
                 }
             })
         }
@@ -54,7 +58,8 @@ class ManageMemberActivity : AppCompatActivity() {
 
     private fun renderMember(memberList: MutableList<Member>) {
         if (memberList.isEmpty()) {
-            adapter = MemberRVAdapter(this,
+            adapter = MemberRVAdapter(
+                this,
                 listOf(
                     Member(
                         "Silahkan masukkan anggota baru melalui input dibawah",
@@ -70,9 +75,18 @@ class ManageMemberActivity : AppCompatActivity() {
         rv_member.layoutManager = layoutManager
     }
 
+    /**
+     * later don't forget to move this logic to view model!
+     */
     fun deleteMember(member: Member) {
         manageMemberViewModel?.deleteMember(member)?.observe(
             this,
-            Observer { isDeleted -> if (isDeleted) showToast("Anggota sudah dihapus!") })
+            Observer { uploadStatus ->
+                when (uploadStatus) {
+                    FirebaseUploadStatus.COMPLETED -> showToast("Anggota sudah dihapus!")
+                    FirebaseUploadStatus.FAILED -> showToast("Gagal hapus data, mengulang...")
+                    else -> showToast("Menghapus data...")
+                }
+            })
     }
 }

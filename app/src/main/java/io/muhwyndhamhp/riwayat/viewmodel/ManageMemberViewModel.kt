@@ -2,27 +2,41 @@ package io.muhwyndhamhp.riwayat.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.muhwyndhamhp.riwayat.helper.FirebaseUploadStatus
 import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.repository.MemberRepository
 
 class ManageMemberViewModel(application: Application) : AndroidViewModel(application) {
 
     private var repository = MemberRepository(application)
+    private lateinit var memberList: LiveData<MutableList<Member>>
 
-    fun getMemberList() = repository.getAllMember()
+    fun getMemberList(): LiveData<MutableList<Member>> {
+        memberList = repository.getAllMember()!!
+        return memberList
+    }
 
     fun getSingleMember(phoneNumber: String) = repository.getMember(phoneNumber)
 
     fun insertMember(
         memberName: String,
         memberPhoneNumber: String
-    ): MutableLiveData<Boolean> {
+    ): MutableLiveData<FirebaseUploadStatus> {
         return if (checkIsValid(memberName, memberPhoneNumber)) {
-            repository.setMember(Member(phoneNumber = memberPhoneNumber, memberName = memberName))
-            MutableLiveData(true)
+            if (checkIfConflict(memberPhoneNumber)) {
+                repository.setMember(
+                    Member(
+                        phoneNumber = memberPhoneNumber,
+                        memberName = memberName
+                    )
+                )
+            } else {
+                MutableLiveData(FirebaseUploadStatus.CONFLICT)
+            }
         } else {
-            MutableLiveData(false)
+            MutableLiveData(FirebaseUploadStatus.WRONG_INPUT)
         }
     }
 
@@ -31,6 +45,16 @@ class ManageMemberViewModel(application: Application) : AndroidViewModel(applica
                 && memberPhoneNumber.trim { it <= ' ' }.isNotEmpty())
     }
 
-    fun deleteMember(member: Member): MutableLiveData<Boolean> = repository.deleteMember(member)
+    private fun checkIfConflict(memberPhoneNumber: String): Boolean {
+        if (memberList.value!!.size > 0) {
+            for (member in memberList.value!!) {
+                if (member.phoneNumber == memberPhoneNumber) return false
+            }
+        }
+        return true
+    }
+
+    fun deleteMember(member: Member): MutableLiveData<FirebaseUploadStatus> =
+        repository.deleteMember(member)
 
 }
