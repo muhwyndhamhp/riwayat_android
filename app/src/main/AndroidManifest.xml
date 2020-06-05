@@ -11,16 +11,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.InputCaseActivity"></activity>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="io.muhwyndhamhp.riwayat.ui.ManageMemberActivity"/>
+        <activity android:name=".ui.ManageMemberActivity" />
         <activity
-            android:name="io.muhwyndhamhp.riwayat.ui.HomeActivity"
+            android:name=".ui.HomeActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name="io.muhwyndhamhp.riwayat.ui.MainActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
