@@ -1,4 +1,4 @@
-package io.muhwyndham.riwayat.model
+package io.muhwyndhamhp.riwayat.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

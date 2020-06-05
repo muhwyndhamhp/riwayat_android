@@ -1,4 +1,4 @@
-package io.muhwyndham.riwayat.ui
+package io.muhwyndhamhp.riwayat.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -7,8 +7,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
-import io.muhwyndham.riwayat.R
-import io.muhwyndham.riwayat.utils.Constants.Companion.RC_SIGN_IN
+import io.muhwyndhamhp.riwayat.R
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.RC_SIGN_IN
 
 class MainActivity : AppCompatActivity() {
 

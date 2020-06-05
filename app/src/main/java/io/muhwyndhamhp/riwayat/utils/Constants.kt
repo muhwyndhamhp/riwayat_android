@@ -1,4 +1,4 @@
-package io.muhwyndham.riwayat.utils
+package io.muhwyndhamhp.riwayat.utils
 
 class Constants {
     companion object{

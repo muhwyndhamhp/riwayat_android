@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="io.muhwyndham.riwayat">
+    package="io.muhwyndhamhp.riwayat">
 
     <application
         android:allowBackup="true"
@@ -11,12 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.ManageMemberActivity"/>
+        <activity android:name="io.muhwyndhamhp.riwayat.ui.ManageMemberActivity"/>
         <activity
-            android:name=".ui.HomeActivity"
+            android:name="io.muhwyndhamhp.riwayat.ui.HomeActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name="io.muhwyndhamhp.riwayat.ui.MainActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,10 +1,10 @@
-package io.muhwyndham.riwayat.viewmodel
+package io.muhwyndhamhp.riwayat.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import io.muhwyndham.riwayat.model.Member
-import io.muhwyndham.riwayat.repository.MemberRepository
+import io.muhwyndhamhp.riwayat.model.Member
+import io.muhwyndhamhp.riwayat.repository.MemberRepository
 
 class ManageMemberViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -15,10 +15,10 @@ class ManageMemberViewModel(application: Application) : AndroidViewModel(applica
     fun getSingleMember(phoneNumber: String) = repository.getMember(phoneNumber)
 
     fun insertMember(
-        memberName : String,
-        memberPhoneNumber : String
-    ) : MutableLiveData<Boolean> {
-        return if(checkIsValid(memberName, memberPhoneNumber)) {
+        memberName: String,
+        memberPhoneNumber: String
+    ): MutableLiveData<Boolean> {
+        return if (checkIsValid(memberName, memberPhoneNumber)) {
             repository.setMember(Member(phoneNumber = memberPhoneNumber, memberName = memberName))
             MutableLiveData(true)
         } else {
@@ -26,9 +26,11 @@ class ManageMemberViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    private fun checkIsValid(memberName: String, memberPhoneNumber: String) : Boolean{
-        return (memberName.trim{ it <= ' '}.isNotEmpty()
-                && memberPhoneNumber.trim{it <= ' '}.isNotEmpty())
+    private fun checkIsValid(memberName: String, memberPhoneNumber: String): Boolean {
+        return (memberName.trim { it <= ' ' }.isNotEmpty()
+                && memberPhoneNumber.trim { it <= ' ' }.isNotEmpty())
     }
+
+    fun deleteMember(member: Member): MutableLiveData<Boolean> = repository.deleteMember(member)
 
 }

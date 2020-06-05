@@ -1,4 +1,4 @@
-package io.muhwyndham.riwayat
+package io.muhwyndhamhp.riwayat
 
 import org.junit.Test
 

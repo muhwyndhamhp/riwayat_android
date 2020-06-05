@@ -1,8 +1,8 @@
-package io.muhwyndham.riwayat.dao
+package io.muhwyndhamhp.riwayat.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import io.muhwyndham.riwayat.model.Member
+import io.muhwyndhamhp.riwayat.model.Member
 
 @Dao
 interface MemberDao {

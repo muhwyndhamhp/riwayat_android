@@ -1,9 +1,9 @@
-package io.muhwyndham.riwayat.ui
+package io.muhwyndhamhp.riwayat.ui
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import io.muhwyndham.riwayat.R
+import io.muhwyndhamhp.riwayat.R
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {

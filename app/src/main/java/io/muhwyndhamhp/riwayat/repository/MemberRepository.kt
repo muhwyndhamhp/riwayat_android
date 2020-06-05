@@ -1,13 +1,11 @@
-package io.muhwyndham.riwayat.repository
+package io.muhwyndhamhp.riwayat.repository
 
 import android.app.Application
-import io.muhwyndham.riwayat.dao.MemberDao
-import io.muhwyndham.riwayat.database.RoomDatabase
-import io.muhwyndham.riwayat.model.Member
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import androidx.lifecycle.MutableLiveData
+import io.muhwyndhamhp.riwayat.dao.MemberDao
+import io.muhwyndhamhp.riwayat.database.RoomDatabase
+import io.muhwyndhamhp.riwayat.model.Member
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class MemberRepository(application: Application) : CoroutineScope {
@@ -29,8 +27,15 @@ class MemberRepository(application: Application) : CoroutineScope {
         launch { setMemberBG(member) }
     }
 
-    fun deleteMember(member: Member) {
+    fun deleteMember(member: Member) : MutableLiveData<Boolean>{
         launch { deleteMemberBG(member) }
+
+        return MutableLiveData(true)
+    }
+
+
+    private suspend fun fakeDelayAsync() : MutableLiveData<Boolean> {
+        return MutableLiveData(true)
     }
 
     private suspend fun deleteMemberBG(member: Member) {
