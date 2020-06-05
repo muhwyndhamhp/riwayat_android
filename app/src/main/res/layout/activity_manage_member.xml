@@ -17,11 +17,13 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_input"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="230dp"
+        android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
             android:layout_height="match_parent">
 
             <EditText

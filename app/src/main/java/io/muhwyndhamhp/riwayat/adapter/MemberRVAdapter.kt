@@ -1,9 +1,11 @@
 package io.muhwyndhamhp.riwayat.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.model.Member
@@ -23,14 +25,21 @@ class MemberRVAdapter(val context: Context, private val memberList: List<Member>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindView(memberList[position], context)
+        holder.bindView(memberList[position], context, position)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(member: Member, context: Context) {
+        fun bindView(
+            member: Member,
+            context: Context,
+            position: Int
+        ) {
             itemView.tv_nama_anggota.text = member.memberName
             itemView.tv_nomor_hp.text = member.phoneNumber
-
+            if(position%2 == 0) {
+                itemView.item_layout.setBackgroundColor(ResourcesCompat.getColor(context.resources, R.color.light_gray, null))
+                itemView.bt_delete_member.setBackgroundColor(ResourcesCompat.getColor(context.resources, R.color.light_gray, null))
+            }
             itemView.bt_delete_member.setOnClickListener {
                 (context as ManageMemberActivity).deleteMember(member)
             }
