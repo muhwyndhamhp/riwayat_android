@@ -5,55 +5,97 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.michaldrabik.classicmaterialtimepicker.CmtpDateDialogFragment
+import com.michaldrabik.classicmaterialtimepicker.CmtpTimeDialogFragment
+import com.michaldrabik.classicmaterialtimepicker.model.CmtpDate
+import com.michaldrabik.classicmaterialtimepicker.utilities.setOnDatePickedListener
+import com.michaldrabik.classicmaterialtimepicker.utilities.setOnTime24PickedListener
 import io.muhwyndhamhp.riwayat.R
 import kotlinx.android.synthetic.main.case_form_layout.*
 
 class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     var saksiCounter = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_input_case)
 
+        initiateSpinners()
+        initiateSaksiAdditionButton()
+        initiateDateTimePicker()
+
+    }
+
+    private fun initiateDateTimePicker() {
+        et_waktu_kejadian.setOnClickListener { initiateDatePicker() }
+    }
+
+    private fun initiateDatePicker() {
+        val datePicker = CmtpDateDialogFragment.newInstance()
+        datePicker.setInitialDate(day = 2, month = 1, year = 2019)
+        datePicker.setOnDatePickedListener { date ->
+            initiateTimePicker(date)
+        }
+        datePicker.show(supportFragmentManager, "Tag")
+    }
+
+    private fun initiateTimePicker(date: CmtpDate) {
+        val timePicker = CmtpTimeDialogFragment.newInstance()
+
+        timePicker.setInitialTime24(23, 30)
+        timePicker.setOnTime24PickedListener { time ->
+            et_waktu_kejadian.setText("${date.toString()} ${time.toString()}")
+        }
+        timePicker.show(supportFragmentManager, "Tag")
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        if (position == 5) til_pidana_lain.visibility = View.VISIBLE
+        else til_pidana_lain.visibility = View.GONE
+    }
+
+    private fun initiateSaksiAdditionButton() {
+        val saksiTILList = listOf(til_saksi_1, til_saksi_2, til_saksi_3, til_saksi_4, til_saksi_5)
+        ib_add_saksi.setOnClickListener {
+            if (saksiCounter < 5) {
+                saksiTILList[saksiCounter].visibility = View.VISIBLE
+                saksiCounter++
+                if (saksiCounter >= 5) ib_add_saksi.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun initiateSpinners() {
+
+        /**
+         * Spinner for Operator's MIC
+         */
         ArrayAdapter.createFromResource(
             this,
             R.array.operator_list,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
             operator_spinner.adapter = adapter
-
         }
+
+        /**
+         * Spinner for Tindakan Kriminal
+         */
         ArrayAdapter.createFromResource(
             this,
             R.array.pidana_list,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
             pidana_spinner.adapter = adapter
         }
+
+        //add listener to item selection in Tindakan Kriminal Spinner for item 'Lain-lain'
         pidana_spinner.onItemSelectedListener = this
-
-        val saksiTILList = listOf(til_saksi_1, til_saksi_2, til_saksi_3, til_saksi_4, til_saksi_5)
-        ib_add_saksi.setOnClickListener {
-            if (saksiCounter < 5){
-                saksiTILList[saksiCounter].visibility = View.VISIBLE
-                saksiCounter++
-                if(saksiCounter >= 5) ib_add_saksi.visibility = View.GONE
-            }
-        }
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (position == 5) til_pidana_lain.visibility = View.VISIBLE
-        else til_pidana_lain.visibility = View.GONE
     }
 
 }
