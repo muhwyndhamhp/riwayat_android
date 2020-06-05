@@ -20,5 +20,14 @@ class HomeActivity : AppCompatActivity() {
                 )
             )
         }
+
+        cv_input_kasus.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@HomeActivity,
+                    InputCaseActivity::class.java
+                )
+            )
+        }
     }
 }

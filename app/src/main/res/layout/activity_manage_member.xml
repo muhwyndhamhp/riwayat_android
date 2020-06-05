@@ -17,38 +17,61 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_input"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="240dp"
         android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp">
 
-            <EditText
-                android:id="@+id/et_member_name"
+            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                android:id="@+id/til_member_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/edit_text_background_selector"
-                android:hint="@string/nama_anggota"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:padding="10dp"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:padding="16dp"
+                app:animationDuration="200"
+                app:borderColor="@color/colorAccent"
+                app:borderWidth="2dp"
+                app:cornerRadius="0dp"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:id="@+id/et_member_phone"
+                <EditText
+                    android:id="@+id/et_member_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edit_text_background_selector"
+                    android:hint="@string/nama_anggota"
+                    android:importantForAutofill="no"
+                    android:inputType="text" />
+            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                android:id="@+id/til_member_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/edit_text_background_selector"
-                android:hint="@string/nomor_hp"
-                android:importantForAutofill="no"
-                android:inputType="phone"
-                android:padding="10dp"
-                app:layout_constraintTop_toBottomOf="@id/et_member_name" />
+                android:padding="16dp"
+                app:animationDuration="200"
+                app:borderColor="@color/colorAccent"
+                app:borderWidth="2dp"
+                app:cornerRadius="0dp"
+                app:layout_constraintTop_toBottomOf="@id/til_member_name">
+
+                <EditText
+                    android:id="@+id/et_member_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edit_text_background_selector"
+                    android:hint="@string/nomor_hp"
+                    android:importantForAutofill="no"
+                    android:inputType="phone" />
+            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
 
             <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/bt_input_member"
@@ -62,7 +85,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_member_phone"
+                app:layout_constraintTop_toBottomOf="@id/til_member_phone"
                 fancy:fb_radius="30dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,7 @@
 package io.muhwyndhamhp.riwayat.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import androidx.room.*
+import io.muhwyndhamhp.riwayat.database.Converters
 
 @Entity(tableName = "case_table")
 data class Case (
@@ -17,7 +15,9 @@ data class Case (
     @ColumnInfo(name = "lokasi_kejadian") var lokasiKejadian: String = "",
     @ColumnInfo(name = "lac_cid") var lacCid : String = "",
     @ColumnInfo(name = "tindak_pidana") var tindakPidana : String = "",
-    @ColumnInfo(name = "daftar_saksi") var daftarSaksi : List<String> = mutableListOf(),
+//    @TypeConverters(Converters::class)
+    @ColumnInfo(name = "daftar_saksi")
+    var daftarSaksi : List<String> = mutableListOf(),
     @ColumnInfo(name = "hasil_lidik") var hasilLidik: String = "",
     @Ignore var caseNotes: List<CaseNote> = mutableListOf()
 )
