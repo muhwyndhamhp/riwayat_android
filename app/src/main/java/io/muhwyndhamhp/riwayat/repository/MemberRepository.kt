@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import io.muhwyndhamhp.riwayat.dao.MemberDao
 import io.muhwyndhamhp.riwayat.database.RoomDatabase
-import io.muhwyndhamhp.riwayat.helper.FirebaseHelper
 import io.muhwyndhamhp.riwayat.helper.FirebaseHelperImplementation
 import io.muhwyndhamhp.riwayat.helper.FirebaseUploadStatus
 import io.muhwyndhamhp.riwayat.model.Member
@@ -16,7 +15,7 @@ class MemberRepository(application: Application) : CoroutineScope {
         get() = Dispatchers.Main
 
     private var memberDao: MemberDao?
-    private lateinit var firebaseHelper : FirebaseHelperImplementation
+    private var firebaseHelper : FirebaseHelperImplementation
 
     init {
         val db = RoomDatabase.getDatabase(application)
