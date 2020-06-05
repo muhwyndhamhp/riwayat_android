@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
         android:orientation="vertical">
 
         <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
@@ -15,15 +18,313 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             app:animationDuration="200"
-            app:borderColor="@color/colorAccent"
+            app:borderColor="@color/colorPrimary"
             app:borderWidth="2dp"
             app:cornerRadius="0dp">
 
             <EditText
+                android:id="@+id/et_nomor_lp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="No. LP" />
+                android:hint="No. LP"
+                android:singleLine="true" />
 
         </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+        <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="16dp"
+            app:animationDuration="200"
+            app:borderColor="@color/colorPrimary"
+            app:borderWidth="2dp"
+            app:cornerRadius="0dp">
+
+            <EditText
+                android:id="@+id/et_nama_pelapor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Pelapor"
+                android:singleLine="true" />
+
+        </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+        <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="16dp"
+            app:animationDuration="200"
+            app:borderColor="@color/colorPrimary"
+            app:borderWidth="2dp"
+            app:cornerRadius="0dp">
+
+            <EditText
+                android:id="@+id/et_hp_pelapor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nomor HP Pelapor"
+                android:singleLine="true" />
+
+        </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+        <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="16dp"
+            app:animationDuration="200"
+            app:borderColor="@color/colorPrimary"
+            app:borderWidth="2dp"
+            app:cornerRadius="0dp">
+
+            <EditText
+                android:id="@+id/et_alamat_pelapor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Alamat Pelapor"
+                android:singleLine="true" />
+
+        </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+        <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+            android:id="@+id/til_waktu_kejadian"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="16dp"
+            app:animationDuration="200"
+            app:borderColor="@color/colorPrimary"
+            app:borderWidth="2dp"
+            app:cornerRadius="0dp">
+
+            <EditText
+                android:id="@+id/et_waktu_kejadian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:editable="false"
+                android:hint="Waktu Kejadian"
+                android:singleLine="true" />
+
+        </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:padding="16dp"
+                app:animationDuration="200"
+                app:borderColor="@color/colorPrimary"
+                app:borderWidth="2dp"
+                app:cornerRadius="0dp">
+
+                <EditText
+                    android:id="@+id/et_lokasi_kejadian"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Lokasi Kejadian"
+                    android:singleLine="true" />
+
+            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+            <ImageButton
+                android:id="@+id/ib_select_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:foregroundTint="@color/colorPrimary"
+                android:src="@drawable/ic_add_location_black_24dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/operator_spinner"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="150dp"
+                android:layout_height="match_parent" />
+
+            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:padding="16dp"
+                app:animationDuration="200"
+                app:borderColor="@color/colorPrimary"
+                app:borderWidth="2dp"
+                app:cornerRadius="0dp">
+
+                <EditText
+                    android:id="@+id/et_lac_cid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="No. CID"
+                    android:singleLine="true" />
+
+            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/pidana_spinner"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp" />
+
+        <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+            android:id="@+id/til_pidana_lain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="16dp"
+            android:visibility="gone"
+            app:animationDuration="200"
+            app:borderColor="@color/colorPrimary"
+            app:borderWidth="2dp"
+            app:cornerRadius="0dp">
+
+            <EditText
+                android:id="@+id/et_pidana_lain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Jenis Pidana"
+                android:singleLine="true" />
+
+        </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="SAKSI"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/til_saksi_1"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_saksi_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Saksi 1"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/til_saksi_2"
+            android:visibility="gone"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_saksi_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Saksi 2"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/til_saksi_3"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_saksi_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Saksi 3"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/til_saksi_4"
+            android:visibility="gone"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_saksi_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Saksi 4"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_saksi_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_saksi_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Saksi 5"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/ib_add_saksi"
+            android:layout_width="42dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/white"
+            android:foregroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_add_circle_black_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="HASIL LIDIK"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_hasil_lidik"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_hasil_lidik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Hasil Lidik"
+                android:inputType="textMultiLine"
+                android:lines="6"
+                android:gravity="start"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

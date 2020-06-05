@@ -3,4 +3,21 @@
     <string name="nama_anggota">Nama Anggota</string>
     <string name="nomor_hp">Nomor HP</string>
     <string name="tambahkan_anggota">TAMBAHKAN ANGGOTA</string>
+
+    <string-array name="operator_list">
+        <item>T.sel</item>
+        <item>Isat</item>
+        <item>XL/Axis</item>
+        <item>Tri</item>
+        <item>Smartfren</item>
+    </string-array>
+
+    <string-array name="pidana_list">
+        <item>Pembunuhan</item>
+        <item>Curat</item>
+        <item>Curas</item>
+        <item>Penganiayaan</item>
+        <item>Curanmor</item>
+        <item>Lain-lain</item>
+    </string-array>
 </resources>
