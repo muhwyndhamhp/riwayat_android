@@ -5,6 +5,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.muhwyndhamhp.riwayat.model.Member
+import io.muhwyndhamhp.riwayat.utils.Constants
 
 class FirebaseHelperImplementation : FirebaseHelper {
     private lateinit var database: DatabaseReference
@@ -19,23 +20,23 @@ class FirebaseHelperImplementation : FirebaseHelper {
         return database
     }
 
-    override fun uploadMember(member: Member): MutableLiveData<FirebaseUploadStatus> {
-        val status = MutableLiveData(FirebaseUploadStatus.WAITING)
+    override fun uploadMember(member: Member): MutableLiveData<Constants.Companion.FirebaseUploadStatus> {
+        val status = MutableLiveData(Constants.Companion.FirebaseUploadStatus.WAITING)
         val memberReference = initDatabase().child("members").child(member.phoneNumber)
         memberReference
             .setValue(member)
-            .addOnSuccessListener { status.postValue(FirebaseUploadStatus.COMPLETED) }
-            .addOnFailureListener { status.postValue(FirebaseUploadStatus.FAILED) }
+            .addOnSuccessListener { status.postValue(Constants.Companion.FirebaseUploadStatus.COMPLETED) }
+            .addOnFailureListener { status.postValue(Constants.Companion.FirebaseUploadStatus.FAILED) }
         return status
     }
 
-    override fun deleteMember(member: Member): MutableLiveData<FirebaseUploadStatus> {
-        val status = MutableLiveData(FirebaseUploadStatus.WAITING)
+    override fun deleteMember(member: Member): MutableLiveData<Constants.Companion.FirebaseUploadStatus> {
+        val status = MutableLiveData(Constants.Companion.FirebaseUploadStatus.WAITING)
         val memberReference = initDatabase().child("members").child(member.phoneNumber)
         memberReference
             .setValue(null)
-            .addOnSuccessListener { status.postValue(FirebaseUploadStatus.COMPLETED) }
-            .addOnFailureListener { status.postValue(FirebaseUploadStatus.FAILED) }
+            .addOnSuccessListener { status.postValue(Constants.Companion.FirebaseUploadStatus.COMPLETED) }
+            .addOnFailureListener { status.postValue(Constants.Companion.FirebaseUploadStatus.FAILED) }
         return status
     }
 

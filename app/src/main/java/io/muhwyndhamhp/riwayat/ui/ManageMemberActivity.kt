@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.adapter.MemberRVAdapter
-import io.muhwyndhamhp.riwayat.helper.FirebaseUploadStatus
 import io.muhwyndhamhp.riwayat.model.Member
+import io.muhwyndhamhp.riwayat.utils.Constants
 import io.muhwyndhamhp.riwayat.viewmodel.ManageMemberViewModel
 import kotlinx.android.synthetic.main.activity_manage_member.*
 
@@ -31,10 +31,10 @@ class ManageMemberActivity : AppCompatActivity() {
                 et_member_phone.text.toString()
             )?.observe(this@ManageMemberActivity, Observer { insertStatus ->
                 when (insertStatus) {
-                    FirebaseUploadStatus.COMPLETED -> setPostInsertedState()
-                    FirebaseUploadStatus.WRONG_INPUT -> showToast("Kolom tidak boleh kosong!")
-                    FirebaseUploadStatus.FAILED -> showToast("Gagal mengupload data, mengulang...")
-                    FirebaseUploadStatus.CONFLICT -> showToast("Anggota dengan nomor telepon tersebut sudah ada!")
+                    Constants.Companion.FirebaseUploadStatus.COMPLETED -> setPostInsertedState()
+                    Constants.Companion.FirebaseUploadStatus.WRONG_INPUT -> showToast("Kolom tidak boleh kosong!")
+                    Constants.Companion.FirebaseUploadStatus.FAILED -> showToast("Gagal mengupload data, mengulang...")
+                    Constants.Companion.FirebaseUploadStatus.CONFLICT -> showToast("Anggota dengan nomor telepon tersebut sudah ada!")
                     else -> showToast("Mengupload data...")
                 }
             })
@@ -83,8 +83,8 @@ class ManageMemberActivity : AppCompatActivity() {
             this,
             Observer { uploadStatus ->
                 when (uploadStatus) {
-                    FirebaseUploadStatus.COMPLETED -> showToast("Anggota sudah dihapus!")
-                    FirebaseUploadStatus.FAILED -> showToast("Gagal hapus data, mengulang...")
+                    Constants.Companion.FirebaseUploadStatus.COMPLETED -> showToast("Anggota sudah dihapus!")
+                    Constants.Companion.FirebaseUploadStatus.FAILED -> showToast("Gagal hapus data, mengulang...")
                     else -> showToast("Menghapus data...")
                 }
             })

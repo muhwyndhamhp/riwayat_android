@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.muhwyndhamhp.riwayat.helper.FirebaseUploadStatus
 import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.repository.MemberRepository
+import io.muhwyndhamhp.riwayat.utils.Constants
 
 class ManageMemberViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -23,7 +23,7 @@ class ManageMemberViewModel(application: Application) : AndroidViewModel(applica
     fun insertMember(
         memberName: String,
         memberPhoneNumber: String
-    ): MutableLiveData<FirebaseUploadStatus> {
+    ): MutableLiveData<Constants.Companion.FirebaseUploadStatus> {
         return if (checkIsValid(memberName, memberPhoneNumber)) {
             if (checkIfConflict(memberPhoneNumber)) {
                 repository.setMember(
@@ -33,10 +33,10 @@ class ManageMemberViewModel(application: Application) : AndroidViewModel(applica
                     )
                 )
             } else {
-                MutableLiveData(FirebaseUploadStatus.CONFLICT)
+                MutableLiveData(Constants.Companion.FirebaseUploadStatus.CONFLICT)
             }
         } else {
-            MutableLiveData(FirebaseUploadStatus.WRONG_INPUT)
+            MutableLiveData(Constants.Companion.FirebaseUploadStatus.WRONG_INPUT)
         }
     }
 
@@ -54,7 +54,7 @@ class ManageMemberViewModel(application: Application) : AndroidViewModel(applica
         return true
     }
 
-    fun deleteMember(member: Member): MutableLiveData<FirebaseUploadStatus> =
+    fun deleteMember(member: Member): MutableLiveData<Constants.Companion.FirebaseUploadStatus> =
         repository.deleteMember(member)
 
 }

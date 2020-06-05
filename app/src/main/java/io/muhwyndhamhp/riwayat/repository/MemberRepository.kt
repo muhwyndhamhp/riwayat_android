@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import io.muhwyndhamhp.riwayat.dao.MemberDao
 import io.muhwyndhamhp.riwayat.database.RoomDatabase
 import io.muhwyndhamhp.riwayat.helper.FirebaseHelperImplementation
-import io.muhwyndhamhp.riwayat.helper.FirebaseUploadStatus
 import io.muhwyndhamhp.riwayat.model.Member
+import io.muhwyndhamhp.riwayat.utils.Constants
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -27,12 +27,12 @@ class MemberRepository(application: Application) : CoroutineScope {
 
     fun getMember(phoneNumber: String) = memberDao?.getMember(phoneNumber)
 
-    fun setMember(member: Member) : MutableLiveData<FirebaseUploadStatus>{
+    fun setMember(member: Member) : MutableLiveData<Constants.Companion.FirebaseUploadStatus>{
         launch { setMemberBG(member) }
         return firebaseHelper.uploadMember(member)
     }
 
-    fun deleteMember(member: Member) : MutableLiveData<FirebaseUploadStatus>{
+    fun deleteMember(member: Member) : MutableLiveData<Constants.Companion.FirebaseUploadStatus>{
         launch { deleteMemberBG(member) }
         return firebaseHelper.deleteMember(member)
     }
