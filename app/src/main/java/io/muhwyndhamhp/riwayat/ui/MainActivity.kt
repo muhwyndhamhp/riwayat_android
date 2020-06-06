@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.RC_SIGN_IN
 
@@ -15,7 +17,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        Firebase.database.setPersistenceEnabled(true)
+        Firebase.database.setPersistenceCacheSizeBytes(41943040)
         prepareFirebaseUI()
     }
 

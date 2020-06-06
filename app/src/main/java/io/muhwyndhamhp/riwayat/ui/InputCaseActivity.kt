@@ -1,11 +1,13 @@
 package io.muhwyndhamhp.riwayat.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
@@ -15,13 +17,16 @@ import com.michaldrabik.classicmaterialtimepicker.model.CmtpDate
 import com.michaldrabik.classicmaterialtimepicker.utilities.setOnDatePickedListener
 import com.michaldrabik.classicmaterialtimepicker.utilities.setOnTime24PickedListener
 import io.muhwyndhamhp.riwayat.R
+import io.muhwyndhamhp.riwayat.model.Case
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_ADDRESS
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LAT
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LONG
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_NAME
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.RC_LOCATION_PICKER
 import io.muhwyndhamhp.riwayat.viewmodel.InputCaseViewModel
+import kotlinx.android.synthetic.main.activity_input_case.*
 import kotlinx.android.synthetic.main.case_form_layout.*
+import java.text.SimpleDateFormat
 
 class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -49,7 +54,99 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
      */
 
     private fun initiateInputButtonListener() {
+        bt_input_case.setOnClickListener {
+            val anyList = mutableListOf<Any>()
 
+            val nomorLp = if (et_nomor_lp.text.toString().trim { it <= ' ' }
+                    .isNotEmpty()) et_nomor_lp.text.toString() else null
+            val namaPelapor = if (et_nama_pelapor.text.toString().trim { it <= ' ' }
+                    .isNotEmpty()) et_nama_pelapor.text.toString() else null
+            val nomorHpPelapor = if (et_hp_pelapor.text.toString().trim { it <= ' ' }
+                    .isNotEmpty()) et_hp_pelapor.text.toString() else null
+            val alamatPelapor = if (et_alamat_pelapor.text.toString().trim { it <= ' ' }
+                    .isNotEmpty()) et_alamat_pelapor.text.toString() else null
+            val waktuKejadian = if (et_waktu_kejadian.text.toString().trim { it <= ' ' }
+                    .isNotEmpty()) parseTimestamp(et_waktu_kejadian.text.toString()) else null
+            val lokasiKejadian = if (et_lokasi_kejadian.text.toString().trim { it <= ' ' }
+                    .isNotEmpty()) et_lokasi_kejadian.text.toString() else null
+            val latLongKejadian = if (::latLong.isInitialized) latLong.toString() else ""
+            val lacCid =
+                if (et_lac_cid.text.toString().trim { it <= ' ' }.isNotEmpty()) parseLacCid(
+                    et_lac_cid.text.toString()
+                ) else null
+            val tindakPidana = parseTindakPidana(et_pidana_lain.text.toString())
+            val daftarSaksi = getDaftarSaksi()
+            val hasilLidik = if (et_hasil_lidik.text.toString().trim { it <= ' ' }
+                    .isNotEmpty()) et_hasil_lidik.text.toString() else ""
+
+
+            if (
+                nomorLp == null ||
+                namaPelapor == null ||
+                nomorHpPelapor == null ||
+                alamatPelapor == null ||
+                waktuKejadian == null ||
+                lokasiKejadian == null ||
+                lacCid == null
+            ) {
+                val toast = Toast.makeText(this, "Kolom tidak boleh kosong!", Toast.LENGTH_LONG)
+                toast.show()
+            } else {
+                val case = Case(
+                    nomorLp,
+                    namaPelapor,
+                    nomorHpPelapor,
+                    alamatPelapor,
+                    waktuKejadian,
+                    latLongKejadian,
+                    lokasiKejadian,
+                    lacCid,
+                    tindakPidana,
+                    daftarSaksi,
+                    hasilLidik
+                )
+
+                inputCaseViewModel!!.insertCase(case)
+                finish()
+            }
+        }
+    }
+
+    private fun getDaftarSaksi(): List<String> {
+        val daftarSaksi = mutableListOf<String>()
+        val saksiETLList = listOf(et_saksi_1, et_saksi_2, et_saksi_3, et_saksi_4, et_saksi_5)
+        for (saksiEt in saksiETLList) {
+            if (saksiEt.text.toString().trim { it <= ' ' }
+                    .isNotEmpty()) daftarSaksi.add(saksiEt.text.toString())
+        }
+
+        return daftarSaksi
+    }
+
+    private fun parseTindakPidana(toString: String): String {
+        return if (pidana_spinner.selectedItemPosition != 5) pidana_spinner.selectedItem.toString() else toString
+    }
+
+    private fun parseLacCid(toString: String): String {
+        var lacCid = ""
+        lacCid += when (operator_spinner.selectedItem) {
+            "T.sel" -> "51010"
+            "Isat" -> "51001"
+            "Xl/Axis" -> "51011"
+            "Tri" -> "51089"
+            "Smartfren" -> "51009"
+            else -> "00000"
+        }
+
+        return "$lacCid-$toString"
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun parseTimestamp(toString: String): Long {
+        val format = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        val date = format.parse(toString)!!
+
+        return date.time
     }
 
     /**
@@ -83,7 +180,7 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         timePicker.setInitialTime24(23, 30)
         timePicker.setOnTime24PickedListener { time ->
-            et_waktu_kejadian.setText("${date.toString()} ${time.toString()}")
+            et_waktu_kejadian.setText("$date $time")
         }
         timePicker.show(supportFragmentManager, "Tag")
     }

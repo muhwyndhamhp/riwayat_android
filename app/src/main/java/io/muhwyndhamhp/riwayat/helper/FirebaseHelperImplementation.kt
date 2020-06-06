@@ -14,8 +14,6 @@ class FirebaseHelperImplementation : FirebaseHelper {
     private fun initDatabase(): DatabaseReference {
         if (!this::database.isInitialized) {
             val firebaseDatabase = Firebase.database
-            firebaseDatabase.setPersistenceEnabled(true)
-            firebaseDatabase.setPersistenceCacheSizeBytes(41943040)
             database = firebaseDatabase.reference
         }
         return database

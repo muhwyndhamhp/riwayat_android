@@ -14,7 +14,7 @@
         <include android:id="@+id/layout_form" layout="@layout/case_form_layout"/>
 
         <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/bt_input_member"
+            android:id="@+id/bt_input_case"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
