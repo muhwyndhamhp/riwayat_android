@@ -40,6 +40,8 @@ class AppRepository(application: Application) : CoroutineScope {
 
     fun getAllCase() = caseDao?.getAllCase()
     fun getCaseByNomorLp(nomorLp: String) = caseDao?.getCaseByNomorLp(nomorLp)
+    fun getCaseByString(string: String) = caseDao?.getCaseByString(string)
+
     fun insertCase(case: Case) {
         launch { insertCaseBG(case) }
     }
@@ -47,6 +49,7 @@ class AppRepository(application: Application) : CoroutineScope {
     fun deleteCase(case: Case) {
         launch { deleteCaseBG(case) }
     }
+
 
     private suspend fun deleteCaseBG(case: Case) {
         withContext(Dispatchers.IO) {

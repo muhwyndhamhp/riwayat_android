@@ -52,30 +52,38 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     /**
      * Below are Data specific functions, for controlling data flow and communicating with ViewModel
      */
-
+    // TODO THIS IS TEMPORARY! Please fix for more readable code here later
     private fun initiateInputButtonListener() {
         bt_input_case.setOnClickListener {
-            val anyList = mutableListOf<Any>()
-
             val nomorLp = if (et_nomor_lp.text.toString().trim { it <= ' ' }
                     .isNotEmpty()) et_nomor_lp.text.toString() else null
+
             val namaPelapor = if (et_nama_pelapor.text.toString().trim { it <= ' ' }
                     .isNotEmpty()) et_nama_pelapor.text.toString() else null
+
             val nomorHpPelapor = if (et_hp_pelapor.text.toString().trim { it <= ' ' }
                     .isNotEmpty()) et_hp_pelapor.text.toString() else null
+
             val alamatPelapor = if (et_alamat_pelapor.text.toString().trim { it <= ' ' }
                     .isNotEmpty()) et_alamat_pelapor.text.toString() else null
+
             val waktuKejadian = if (et_waktu_kejadian.text.toString().trim { it <= ' ' }
                     .isNotEmpty()) parseTimestamp(et_waktu_kejadian.text.toString()) else null
+
             val lokasiKejadian = if (et_lokasi_kejadian.text.toString().trim { it <= ' ' }
                     .isNotEmpty()) et_lokasi_kejadian.text.toString() else null
+
             val latLongKejadian = if (::latLong.isInitialized) latLong.toString() else ""
+
             val lacCid =
                 if (et_lac_cid.text.toString().trim { it <= ' ' }.isNotEmpty()) parseLacCid(
                     et_lac_cid.text.toString()
                 ) else null
+
             val tindakPidana = parseTindakPidana(et_pidana_lain.text.toString())
+
             val daftarSaksi = getDaftarSaksi()
+
             val hasilLidik = if (et_hasil_lidik.text.toString().trim { it <= ' ' }
                     .isNotEmpty()) et_hasil_lidik.text.toString() else ""
 
@@ -175,6 +183,7 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         datePicker.show(supportFragmentManager, "Tag")
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initiateTimePicker(date: CmtpDate) {
         val timePicker = CmtpTimeDialogFragment.newInstance()
 
