@@ -321,7 +321,7 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback {
         // Set up an ArrayAdapter to convert likely places into TextViews to populate the ListView
         val placesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
             this,
-            android.R.layout.simple_list_item_1,
+            android.R.layout.simple_list_item_activated_1,
             mLikelyPlaceNames
         )!!
         lstPlaces!!.adapter = placesAdapter

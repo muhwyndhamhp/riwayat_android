@@ -16,6 +16,7 @@ class HomeActivity : AppCompatActivity() {
 
 //        val imageViewTarget = GlideDrawableImageViewTarget(iv_)
         Glide.with(this).load(R.raw.one).into(iv_background)
+
         cv_anggota.setOnClickListener {
             startActivity(
                 Intent(
@@ -23,6 +24,10 @@ class HomeActivity : AppCompatActivity() {
                     ManageMemberActivity::class.java
                 )
             )
+        }
+
+        cv_daftar_kasus.setOnClickListener {
+            startActivity(Intent(this@HomeActivity, CaseListActivity::class.java))
         }
 
         cv_input_kasus.setOnClickListener {
@@ -33,5 +38,6 @@ class HomeActivity : AppCompatActivity() {
                 )
             )
         }
+
     }
 }

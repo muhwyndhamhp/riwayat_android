@@ -28,9 +28,10 @@
             tools:context=".MapsActivity" />
 
         <ListView
+            android:backgroundTint="@color/white"
             android:id="@+id/listPlaces"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>
