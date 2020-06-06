@@ -13,7 +13,9 @@ class Constants {
         }
 
         const val LOCATION_ADDRESS = "LOCATION_ADDRESS"
-        const val LOCATION_LATLONG = "LOCATION_LAT_LONG"
+        const val LOCATION_LAT= "LOCATION_LAT"
+        const val LOCATION_LONG = "LOCATION_LONG"
         const val LOCATION_NAME = "LOCATION_NAME"
+        const val RC_LOCATION_PICKER = 20002
     }
 }

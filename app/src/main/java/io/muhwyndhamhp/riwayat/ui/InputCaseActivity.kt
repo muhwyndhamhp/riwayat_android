@@ -1,21 +1,30 @@
 package io.muhwyndhamhp.riwayat.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.model.LatLng
 import com.michaldrabik.classicmaterialtimepicker.CmtpDateDialogFragment
 import com.michaldrabik.classicmaterialtimepicker.CmtpTimeDialogFragment
 import com.michaldrabik.classicmaterialtimepicker.model.CmtpDate
 import com.michaldrabik.classicmaterialtimepicker.utilities.setOnDatePickedListener
 import com.michaldrabik.classicmaterialtimepicker.utilities.setOnTime24PickedListener
 import io.muhwyndhamhp.riwayat.R
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_ADDRESS
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LAT
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LONG
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_NAME
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.RC_LOCATION_PICKER
 import kotlinx.android.synthetic.main.case_form_layout.*
 
 class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     var saksiCounter = 1
+    lateinit var latLong: LatLng
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +33,16 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         initiateSpinners()
         initiateSaksiAdditionButton()
         initiateDateTimePicker()
+        initiateLocationPicker()
+    }
 
+    private fun initiateLocationPicker() {
+        ib_select_location.setOnClickListener {
+            startActivityForResult(
+                Intent(this, LocationPickerActivity::class.java),
+                RC_LOCATION_PICKER
+            )
+        }
     }
 
     private fun initiateDateTimePicker() {
@@ -55,6 +73,21 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (position == 5) til_pidana_lain.visibility = View.VISIBLE
         else til_pidana_lain.visibility = View.GONE
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_LOCATION_PICKER) {
+            if (resultCode == Activity.RESULT_OK) {
+                val locationName = data!!.getStringExtra(LOCATION_NAME)
+                val locationLat = data.getStringExtra(LOCATION_LAT)!!
+                val locationLong = data.getStringExtra(LOCATION_LONG)!!
+                val locationAddress = data.getStringExtra(LOCATION_ADDRESS)
+
+                et_lokasi_kejadian.setText(if (locationName != null && locationName.length < 5) locationAddress else "$locationName, $locationAddress")
+                latLong = LatLng(locationLat.toDouble(), locationLong.toDouble())
+            }
+        }
     }
 
     private fun initiateSaksiAdditionButton() {

@@ -14,7 +14,6 @@ import android.view.MenuItem
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -34,7 +33,8 @@ import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_ADDRESS
-import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LATLONG
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LAT
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LONG
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_NAME
 import kotlinx.android.synthetic.main.activity_location_picker.*
 import java.util.*
@@ -107,8 +107,8 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_geolocate -> {
-                pickCurrentPlace();
-                true;
+                pickCurrentPlace()
+                true
             }
             else ->
                 super.onOptionsItemSelected(item)
@@ -132,9 +132,9 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 
-        mMap.uiSettings.isZoomControlsEnabled = true;
+        mMap.uiSettings.isZoomControlsEnabled = true
 
-        getLocationPermission();
+        getLocationPermission()
 
         mMap.setOnMapClickListener {
 
@@ -154,7 +154,8 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
             val intent = Intent()
             intent.putExtra(LOCATION_NAME, it.title)
-            intent.putExtra(LOCATION_LATLONG, it.position)
+            intent.putExtra(LOCATION_LAT, it.position.latitude.toString())
+            intent.putExtra(LOCATION_LONG, it.position.longitude.toString())
             intent.putExtra(LOCATION_ADDRESS, it.snippet)
             setResult(Activity.RESULT_OK, intent)
             finish()
@@ -219,10 +220,10 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 // COMMENTED OUT UNTIL WE DEFINE THE METHOD
                 // Populate the ListView
-                fillPlacesList();
+                fillPlacesList()
 
-                for (i in mLikelyPlaceAddresses.indices) {
-                    addMarkers(i)
+                for (j in mLikelyPlaceAddresses.indices) {
+                    addMarkers(j)
                 }
             } else {
                 val exception = task.exception
@@ -265,6 +266,9 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback {
                             )
                         )
 
+                        val geocoder = Geocoder(this, Locale.getDefault())
+                        val address = geocoder.getFromLocation(mLastKnownLocation!!.latitude, mLastKnownLocation!!.longitude, 1)
+
                         mMap.addMarker(
                             MarkerOptions()
                                 .title("Your Location")
@@ -274,11 +278,12 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback {
                                         mLastKnownLocation!!.longitude
                                     )
                                 )
+                                .snippet(address[0].getAddressLine(0))
                         )
 
                     } else {
                         Log.d(TAG, "Current location is null. Using defaults.")
-                        Log.e(TAG, "Exception: %s", task.getException())
+                        Log.e(TAG, "Exception: %s", task.exception)
                         mMap.moveCamera(
                             CameraUpdateFactory
                                 .newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM.toFloat())
