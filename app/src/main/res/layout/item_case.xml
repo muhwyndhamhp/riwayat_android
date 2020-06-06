@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:maxWidth="200dp"
+            android:maxWidth="220dp"
             android:text="Nama Pelapor disini"
             android:textColor="@color/colorPrimary"
             android:textSize="21sp"
@@ -51,7 +51,8 @@
             android:id="@+id/tv_lokasi_kejadian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="200dp"
+            android:maxWidth="220dp"
+            android:layout_marginTop="5dp"
             android:text="Alamat lokasi kejadian disini dalam bentuk alamat tertulis ada disini"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_tindak_pidana" />

@@ -15,7 +15,7 @@ class CaseListRVAdapter(val context: Context, private val caseList: List<Case>) 
         fun bindView(case: Case, context: Context, index: Int) {
             itemView.tv_nomor_lp.text = "Nomor LP: " + case.nomorLP
             itemView.tv_nama_pelapor.text = "Pelapor:\n"+ case.namaPelapor
-            itemView.tv_lokasi_kejadian.text = case.lokasiKejadian
+            itemView.tv_lokasi_kejadian.text = "Lokasi kejadian:\n" + case.lokasiKejadian
             itemView.tv_tindak_pidana.text = case.tindakPidana
             itemView.iv_pidana_icon.setBackgroundResource(selectDrawable(case.tindakPidana))
         }

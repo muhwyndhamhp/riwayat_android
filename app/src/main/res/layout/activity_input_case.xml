@@ -13,19 +13,19 @@
         android:orientation="vertical">
         <include android:id="@+id/layout_form" layout="@layout/case_form_layout"/>
 
-        <mehdi.sakout.fancybuttons.FancyButton
+        <Button
             android:id="@+id/bt_input_case"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_gravity="center"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:paddingLeft="48dp"
-            android:paddingRight="48dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:backgroundTint="@color/colorAccent"
             android:text="INPUT KASUS"
-            android:textColor="@color/white"
-            fancy:fb_radius="30dp" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </ScrollView>
