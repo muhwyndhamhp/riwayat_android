@@ -10,7 +10,7 @@ import io.muhwyndhamhp.riwayat.utils.Constants
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class MemberRepository(application: Application) : CoroutineScope {
+class AppRepository(application: Application) : CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 

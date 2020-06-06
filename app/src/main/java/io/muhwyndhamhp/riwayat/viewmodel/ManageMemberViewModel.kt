@@ -5,12 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.muhwyndhamhp.riwayat.model.Member
-import io.muhwyndhamhp.riwayat.repository.MemberRepository
+import io.muhwyndhamhp.riwayat.repository.AppRepository
 import io.muhwyndhamhp.riwayat.utils.Constants
 
 class ManageMemberViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var repository = MemberRepository(application)
+    private var repository = AppRepository(application)
     private lateinit var memberList: LiveData<MutableList<Member>>
 
     fun getMemberList(): LiveData<MutableList<Member>> {

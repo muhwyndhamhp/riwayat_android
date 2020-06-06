@@ -9,6 +9,7 @@ import io.muhwyndhamhp.riwayat.database.Converters
 @Entity(tableName = "case_note_table")
 data class CaseNote (
     @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name="timestamp") var timestamp: Long = 0L,
     @ColumnInfo(name = "nomor_lp") var nomorLP : String = "",
     @ColumnInfo(name = "judul_catatan") var judulCatatan: String = "",
     @ColumnInfo(name = "isi_catatan") var isiCatatan : String = "",

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
 import com.michaldrabik.classicmaterialtimepicker.CmtpDateDialogFragment
 import com.michaldrabik.classicmaterialtimepicker.CmtpTimeDialogFragment
@@ -19,6 +20,7 @@ import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LAT
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LONG
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_NAME
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.RC_LOCATION_PICKER
+import io.muhwyndhamhp.riwayat.viewmodel.InputCaseViewModel
 import kotlinx.android.synthetic.main.case_form_layout.*
 
 class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -26,15 +28,29 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     var saksiCounter = 1
     lateinit var latLong: LatLng
 
+    private var inputCaseViewModel: InputCaseViewModel? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_input_case)
+
+        inputCaseViewModel = ViewModelProvider(this).get(InputCaseViewModel::class.java)
 
         initiateSpinners()
         initiateSaksiAdditionButton()
         initiateDateTimePicker()
         initiateLocationPicker()
     }
+
+    /**
+     * Below are Data specific functions, for controlling data flow and communicating with ViewModel
+     */
+
+
+
+    /**
+     * below are UI specific functions, for controlling UI behaviour
+     */
 
     private fun initiateLocationPicker() {
         ib_select_location.setOnClickListener {
