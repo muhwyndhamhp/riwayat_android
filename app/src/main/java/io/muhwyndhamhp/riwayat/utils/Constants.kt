@@ -1,8 +1,9 @@
 package io.muhwyndhamhp.riwayat.utils
 
 class Constants {
-    companion object{
+    companion object {
         const val RC_SIGN_IN = 101
+
         enum class FirebaseUploadStatus {
             FAILED,
             COMPLETED,
@@ -10,5 +11,9 @@ class Constants {
             WRONG_INPUT,
             CONFLICT
         }
+
+        const val LOCATION_ADDRESS = "LOCATION_ADDRESS"
+        const val LOCATION_LATLONG = "LOCATION_LAT_LONG"
+        const val LOCATION_NAME = "LOCATION_NAME"
     }
 }
