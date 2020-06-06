@@ -40,13 +40,17 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         initiateSaksiAdditionButton()
         initiateDateTimePicker()
         initiateLocationPicker()
+
+        initiateInputButtonListener()
     }
 
     /**
      * Below are Data specific functions, for controlling data flow and communicating with ViewModel
      */
 
+    private fun initiateInputButtonListener() {
 
+    }
 
     /**
      * below are UI specific functions, for controlling UI behaviour
