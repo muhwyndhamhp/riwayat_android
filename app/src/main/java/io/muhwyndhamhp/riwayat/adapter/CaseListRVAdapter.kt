@@ -1,12 +1,16 @@
 package io.muhwyndhamhp.riwayat.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.model.Case
+import io.muhwyndhamhp.riwayat.ui.CaseListActivity
+import io.muhwyndhamhp.riwayat.ui.EditCaseActivity
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.NOMOR_LP
 import kotlinx.android.synthetic.main.item_case.view.*
 
 class CaseListRVAdapter(val context: Context, private val caseList: List<Case>) :
@@ -14,10 +18,15 @@ class CaseListRVAdapter(val context: Context, private val caseList: List<Case>) 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(case: Case, context: Context, index: Int) {
             itemView.tv_nomor_lp.text = "Nomor LP: " + case.nomorLP.replace("-", "/")
-            itemView.tv_nama_pelapor.text = "Pelapor:\n"+ case.namaPelapor
+            itemView.tv_nama_pelapor.text = "Pelapor:\n" + case.namaPelapor
             itemView.tv_lokasi_kejadian.text = "Lokasi kejadian:\n" + case.lokasiKejadian
             itemView.tv_tindak_pidana.text = case.tindakPidana
             itemView.iv_pidana_icon.setBackgroundResource(selectDrawable(case.tindakPidana))
+            itemView.bt_edit_case.setOnClickListener {
+                val intent = Intent(context, EditCaseActivity::class.java)
+                intent.putExtra(NOMOR_LP, case.nomorLP)
+                (context as CaseListActivity).startActivity(intent)
+            }
         }
 
         private fun selectDrawable(tindakPidana: String): Int {

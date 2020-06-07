@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.InputCaseActivity">
+    tools:context=".ui.EditCaseActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +14,7 @@
             layout="@layout/case_form_layout" />
 
         <Button
-            android:id="@+id/bt_input_case"
+            android:id="@+id/bt_edit_case"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -25,7 +24,7 @@
             android:paddingTop="20dp"
             android:paddingRight="30dp"
             android:paddingBottom="20dp"
-            android:text="INPUT KASUS"
+            android:text="EDIT KASUS"
             android:textColor="@color/white" />
     </LinearLayout>
 

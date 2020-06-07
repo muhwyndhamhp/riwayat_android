@@ -17,5 +17,7 @@ class Constants {
         const val LOCATION_LONG = "LOCATION_LONG"
         const val LOCATION_NAME = "LOCATION_NAME"
         const val RC_LOCATION_PICKER = 20002
+
+        const val NOMOR_LP = "NOMOR_LP"
     }
 }

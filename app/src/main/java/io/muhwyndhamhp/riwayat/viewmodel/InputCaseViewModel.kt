@@ -20,4 +20,6 @@ class InputCaseViewModel(application: Application) : AndroidViewModel(applicatio
         val currentMemberPhoneNumber = FirebaseAuth.getInstance().currentUser!!.phoneNumber!!.replace("+62", "0")
         return repository.getMember(currentMemberPhoneNumber)
     }
+
+    fun getCase(nomorLp: String): LiveData<Case>? = repository.getCaseByNomorLp(nomorLp)
 }
