@@ -61,8 +61,10 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
         val nomorLp = intent.getStringExtra(NOMOR_LP)!!
 
         editCaseViewModel!!.getCase(nomorLp)!!.observe(this, Observer {
-            currentCase = it
-            inflateCaseToUI()
+            if(it != null){
+                currentCase = it
+                inflateCaseToUI()
+            }
         })
     }
 
