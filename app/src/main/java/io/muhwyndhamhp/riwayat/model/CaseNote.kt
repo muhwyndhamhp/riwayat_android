@@ -13,6 +13,7 @@ data class CaseNote (
     @ColumnInfo(name = "nomor_lp") var nomorLP : String = "",
     @ColumnInfo(name = "judul_catatan") var judulCatatan: String = "",
     @ColumnInfo(name = "isi_catatan") var isiCatatan : String = "",
+    @ColumnInfo(name = "petugas") var petugas: String = "Anonim",
 //    @TypeConverters(Converters::class)
     @ColumnInfo(name = "daftar_gambar")
     var daftarGambar: List<String> = mutableListOf()
