@@ -30,8 +30,8 @@ import java.text.SimpleDateFormat
 
 class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    var saksiCounter = 1
-    lateinit var latLong: LatLng
+    private var saksiCounter = 1
+    private lateinit var latLong: LatLng
 
     private var inputCaseViewModel: InputCaseViewModel? = null
 
@@ -56,7 +56,7 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private fun initiateInputButtonListener() {
         bt_input_case.setOnClickListener {
             val nomorLp = if (et_nomor_lp.text.toString().trim { it <= ' ' }
-                    .isNotEmpty()) et_nomor_lp.text.toString() else null
+                    .isNotEmpty()) et_nomor_lp.text.toString().replace("/", "-") else null
 
             val namaPelapor = if (et_nama_pelapor.text.toString().trim { it <= ' ' }
                     .isNotEmpty()) et_nama_pelapor.text.toString() else null
