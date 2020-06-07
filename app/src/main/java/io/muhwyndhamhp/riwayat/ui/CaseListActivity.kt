@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_case_list.*
 
 class CaseListActivity : AppCompatActivity() {
 
-    private var caseListViewModel : CaseListViewModel? = null
+    var caseListViewModel : CaseListViewModel? = null
 
     private lateinit var adapter : CaseListRVAdapter
 

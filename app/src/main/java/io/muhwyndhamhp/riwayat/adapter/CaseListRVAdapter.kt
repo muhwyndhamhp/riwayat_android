@@ -1,10 +1,13 @@
 package io.muhwyndhamhp.riwayat.adapter
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.model.Case
@@ -16,6 +19,7 @@ import kotlinx.android.synthetic.main.item_case.view.*
 class CaseListRVAdapter(val context: Context, private val caseList: List<Case>) :
     RecyclerView.Adapter<CaseListRVAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SetTextI18n")
         fun bindView(case: Case, context: Context, index: Int) {
             itemView.tv_nomor_lp.text = "Nomor LP: " + case.nomorLP.replace("-", "/")
             itemView.tv_nama_pelapor.text = "Pelapor:\n" + case.namaPelapor
@@ -27,6 +31,21 @@ class CaseListRVAdapter(val context: Context, private val caseList: List<Case>) 
                 intent.putExtra(NOMOR_LP, case.nomorLP)
                 (context as CaseListActivity).startActivity(intent)
             }
+            itemView.bt_delete_case.setOnClickListener { dialogBuilder(context, case) }
+        }
+
+        private fun dialogBuilder(context: Context, case: Case) {
+
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("Hapus Kasus")
+            builder.setMessage("Apakah anda yakin akan menghapus kasus ini?")
+            builder.setPositiveButton("YA"){ _, _ ->
+                (context as CaseListActivity).caseListViewModel!!.deleteCase(case)
+            }
+            builder.setNegativeButton("TIDAK"){ _, _ ->
+            }
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
 
         private fun selectDrawable(tindakPidana: String): Int {
