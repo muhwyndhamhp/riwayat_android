@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
 import com.michaldrabik.classicmaterialtimepicker.CmtpDateDialogFragment
@@ -18,6 +19,7 @@ import com.michaldrabik.classicmaterialtimepicker.utilities.setOnDatePickedListe
 import com.michaldrabik.classicmaterialtimepicker.utilities.setOnTime24PickedListener
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.model.Case
+import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_ADDRESS
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LAT
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LONG
@@ -32,6 +34,7 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private var saksiCounter = 1
     private lateinit var latLong: LatLng
+    private lateinit var currentMember: Member
 
     private var inputCaseViewModel: InputCaseViewModel? = null
 
@@ -41,12 +44,19 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         inputCaseViewModel = ViewModelProvider(this).get(InputCaseViewModel::class.java)
 
+        fetchInitialUser()
         initiateSpinners()
         initiateSaksiAdditionButton()
         initiateDateTimePicker()
         initiateLocationPicker()
 
         initiateInputButtonListener()
+    }
+
+    private fun fetchInitialUser() {
+        inputCaseViewModel!!.getCurrentMember()!!.observe(this, Observer {
+            currentMember = it
+        })
     }
 
     /**
@@ -111,7 +121,8 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                     lacCid,
                     tindakPidana,
                     daftarSaksi,
-                    hasilLidik
+                    hasilLidik,
+                    currentMember.memberName
                 )
 
                 inputCaseViewModel!!.insertCase(case)

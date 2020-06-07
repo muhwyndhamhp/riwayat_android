@@ -3,8 +3,11 @@ package io.muhwyndhamhp.riwayat.ui
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import io.muhwyndhamhp.riwayat.R
+import io.muhwyndhamhp.riwayat.repository.AppRepository
 import kotlinx.android.synthetic.main.activity_home.*
 
 
@@ -39,5 +42,14 @@ class HomeActivity : AppCompatActivity() {
             )
         }
 
+        getCurrentUser()
+
+    }
+
+    private fun getCurrentUser() {
+        val currentUserPhoneNumber = FirebaseAuth.getInstance().currentUser!!.phoneNumber!!.replace("+62", "0")
+        AppRepository(this.application).getMember(currentUserPhoneNumber)!!.observe(this, Observer {
+            text_current_user.text = "Selamat datang,\n${it.memberName}!"
+        })
     }
 }

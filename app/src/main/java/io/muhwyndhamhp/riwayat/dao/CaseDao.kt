@@ -10,7 +10,7 @@ interface CaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCase(case: Case)
 
-    @Query("SELECT * FROM case_table ORDER BY nomor_lp")
+    @Query("SELECT * FROM case_table ORDER BY nomor_lp DESC")
     fun getAllCase(): LiveData<MutableList<Case>>
 
     @Query("SELECT * FROM case_table WHERE nomor_lp = :nomorLp")
