@@ -15,6 +15,7 @@ import io.muhwyndhamhp.riwayat.repository.AppRepository
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.RC_SIGN_IN
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +62,8 @@ class MainActivity : AppCompatActivity() {
         repository.getAllMemerFromServer().observe(this@MainActivity, Observer {
             var isMember = false
             for (member in it) {
-                val firebasePhoneNumber = FirebaseAuth.getInstance().currentUser!!.phoneNumber!!.replace("+62", "0")
+                val firebasePhoneNumber =
+                    FirebaseAuth.getInstance().currentUser!!.phoneNumber!!.replace("+62", "0")
                 if (member.phoneNumber == firebasePhoneNumber) isMember =
                     true
                 repository.setMember(member)
@@ -70,20 +72,19 @@ class MainActivity : AppCompatActivity() {
             if (isMember) {
                 member_status.text = "Keanggotaan tervalidasi, mendownload data..."
                 repository.getAllCaseFromServer().observe(this, Observer { caseList ->
-                    repository.deleteAllCase()
-                    for (case in caseList) {
-                        repository.insertCase(case, false)
-                    }
-                    member_status.text = "Download selesai!"
-                    startActivity(Intent(this@MainActivity, HomeActivity::class.java))
-                    finish()
+                    repository.refreshAllCase(caseList).observe(this, Observer { isRefreshed ->
+                        if (isRefreshed) {
+                            startActivity(Intent(this@MainActivity, HomeActivity::class.java))
+                            finish()
+                        }
+                    })
+
                 })
             } else {
                 member_status.text =
                     "Anda bukan Anggota kepolisian Kabupaten Bantul, jika anda merasa anggota, silahkan hubungi Admin 'Riwayat'"
                 FirebaseAuth.getInstance().signOut()
             }
-
 
         })
     }

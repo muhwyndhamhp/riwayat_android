@@ -1,6 +1,7 @@
 package io.muhwyndhamhp.riwayat.repository
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.ktx.getValue
@@ -71,9 +72,31 @@ class AppRepository(application: Application) : CoroutineScope {
         launch { deleteAllCaseBG() }
     }
 
+    fun refreshAllCase(caseList: List<Case>): MutableLiveData<Boolean> {
+        val isRefreshed = MutableLiveData(false)
+        launch { refreshAllCaseBG(caseList, isRefreshed) }
+        return isRefreshed
+    }
+
+    private suspend fun refreshAllCaseBG(
+        caseList: List<Case>,
+        refreshed: MutableLiveData<Boolean>
+    ) {
+        withContext(Dispatchers.IO) {
+            val a = caseDao?.deleteAll()
+            for (case in caseList) {
+                caseDao?.insertCase(case)
+            }
+
+            refreshed.postValue(true)
+        }
+
+    }
+
     private suspend fun deleteAllCaseBG() {
-        withContext(Dispatchers.IO){
-            caseDao?.deleteAll()
+        withContext(Dispatchers.IO) {
+            val a = caseDao?.deleteAll()
+            Log.d("CASE_DAO", a.toString())
         }
     }
 
@@ -88,8 +111,8 @@ class AppRepository(application: Application) : CoroutineScope {
         withContext(Dispatchers.IO) {
             caseDao?.insertCase(case)
         }
-        if(isWithServer)
-        firebaseHelper.uploadCase(case)
+        if (isWithServer)
+            firebaseHelper.uploadCase(case)
     }
 
     /**
@@ -145,7 +168,7 @@ class AppRepository(application: Application) : CoroutineScope {
     }
 
     private suspend fun deleteAllMemberBG() {
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             memberDao?.deleteAll()
         }
     }

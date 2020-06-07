@@ -20,7 +20,7 @@ interface CaseDao {
     fun getCaseByString(string: String): LiveData<MutableList<Case>>
 
     @Query("DELETE FROM case_table")
-    fun deleteAll()
+    fun deleteAll() : Int
 
     @Delete
     fun deleteCase(case: Case)
