@@ -3,15 +3,15 @@ package io.muhwyndhamhp.riwayat.helper
 import FirebaseQueryLiveData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.muhwyndhamhp.riwayat.model.Case
 import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.utils.Constants
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.CHILD_ADDED
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.CHILD_CHANGED
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.CHILD_REMOVED
 import java.util.*
 
 class FirebaseHelperImplementation : FirebaseHelper {
@@ -114,13 +114,43 @@ class FirebaseHelperImplementation : FirebaseHelper {
         val liveDataSnapshot = MutableLiveData<DataSnapshot?>()
         val memberReference = initDatabase().child("cases")
 
-        memberReference.addListenerForSingleValueEvent(object : ValueEventListener {
+        memberReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
 
             override fun onDataChange(p0: DataSnapshot) {
                 liveDataSnapshot.postValue(p0)
+            }
+
+        })
+        return liveDataSnapshot
+    }
+
+    override fun getCaseChildListener(): MutableLiveData<Pair<String, DataSnapshot>?> {
+
+        val liveDataSnapshot = MutableLiveData<Pair<String, DataSnapshot>?>()
+        val memberReference = initDatabase().child("cases")
+
+        memberReference.addChildEventListener(object : ChildEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                liveDataSnapshot.postValue(Pair(CHILD_CHANGED, p0))
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                liveDataSnapshot.postValue(Pair(CHILD_ADDED, p0))
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                liveDataSnapshot.postValue(Pair(CHILD_REMOVED, p0))
             }
 
         })

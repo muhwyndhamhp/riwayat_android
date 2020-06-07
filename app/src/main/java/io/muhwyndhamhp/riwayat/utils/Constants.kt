@@ -19,5 +19,8 @@ class Constants {
         const val RC_LOCATION_PICKER = 20002
 
         const val NOMOR_LP = "NOMOR_LP"
+        const val CHILD_CHANGED = "CHILD_CHANGED"
+        const val CHILD_ADDED = "CHILD_ADDED"
+        const val CHILD_REMOVED = "CHILD_REMOVED"
     }
 }

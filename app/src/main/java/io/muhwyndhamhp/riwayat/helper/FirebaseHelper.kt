@@ -23,4 +23,6 @@ interface FirebaseHelper {
     fun deleteCase(case: Case) : MutableLiveData<Constants.Companion.FirebaseUploadStatus>
 
     fun getAllCaseFromServer() : MutableLiveData<DataSnapshot?>
+
+    fun getCaseChildListener() : MutableLiveData<Pair<String, DataSnapshot>?>
 }

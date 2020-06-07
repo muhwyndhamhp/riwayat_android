@@ -13,6 +13,9 @@ import io.muhwyndhamhp.riwayat.helper.FirebaseHelperImplementation
 import io.muhwyndhamhp.riwayat.model.Case
 import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.utils.Constants
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.CHILD_ADDED
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.CHILD_CHANGED
+import io.muhwyndhamhp.riwayat.utils.Constants.Companion.CHILD_REMOVED
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,11 +57,33 @@ class AppRepository(application: Application) : CoroutineScope {
                 for (snapshot in allMemberSnapshot.children) {
                     result.add(snapshot.getValue<Case>()!!)
                 }
-                snapShotConverter.postValue(result)
+                snapShotConverter.postValue(result.asReversed())
+                refreshAllCase(result)
             }
         }
         return snapShotConverter
     }
+
+//    fun subscribeCaseToServer(): MediatorLiveData<Pair<String, Case>> {
+//        val snapshotConverter = MediatorLiveData<Pair<String, Case>>()
+//
+//        snapshotConverter.addSource(getAllCase()!!) {
+//            for (case in it) {
+//                snapshotConverter.postValue(Pair(CHILD_ADDED, case))
+//            }
+//
+//            snapshotConverter.removeSource(getAllCase()!!)
+//        }
+//
+//        snapshotConverter.addSource(firebaseHelper.getCaseChildListener()) {
+//            when (it!!.first) {
+//                CHILD_ADDED, CHILD_CHANGED -> insertCase(it.second.getValue<Case>()!!, false)
+//                CHILD_REMOVED -> deleteCase(it.second.getValue<Case>()!!)
+//            }
+//            snapshotConverter.postValue(Pair(it!!.first, it.second.getValue<Case>()!!))
+//        }
+//        return snapshotConverter
+//    }
 
     fun insertCase(case: Case, isWithServer: Boolean) {
         launch { insertCaseBG(case, isWithServer) }

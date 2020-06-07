@@ -16,7 +16,7 @@ import io.muhwyndhamhp.riwayat.ui.EditCaseActivity
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.NOMOR_LP
 import kotlinx.android.synthetic.main.item_case.view.*
 
-class CaseListRVAdapter(val context: Context, private val caseList: List<Case>) :
+class CaseListRVAdapter(val context: Context, val caseList: MutableList<Case>) :
     RecyclerView.Adapter<CaseListRVAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
