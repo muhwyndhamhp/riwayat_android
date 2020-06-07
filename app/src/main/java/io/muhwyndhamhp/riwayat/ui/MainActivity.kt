@@ -5,12 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.muhwyndhamhp.riwayat.R
+import io.muhwyndhamhp.riwayat.repository.AppRepository
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.RC_SIGN_IN
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,9 +38,8 @@ class MainActivity : AppCompatActivity() {
                 )
 
                 toast.show()
+                afterLoginDataFetch()
 
-                startActivity(Intent(this@MainActivity, HomeActivity::class.java))
-                finish()
             } else {
                 val toast = Toast.makeText(
                     this@MainActivity,
@@ -50,6 +52,42 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun afterLoginDataFetch() {
+        val repository = AppRepository(this@MainActivity.application)
+
+
+        member_status.text = "Mengecek status keanggotaan..."
+
+        repository.getAllMemerFromServer().observe(this@MainActivity, Observer {
+            var isMember = false
+            for (member in it) {
+                val firebasePhoneNumber = FirebaseAuth.getInstance().currentUser!!.phoneNumber!!.replace("+62", "0")
+                if (member.phoneNumber == firebasePhoneNumber) isMember =
+                    true
+                repository.setMember(member)
+            }
+
+            if (isMember) {
+                member_status.text = "Keanggotaan tervalidasi, mendownload data..."
+                repository.getAllCaseFromServer().observe(this, Observer { caseList ->
+                    repository.deleteAllCase()
+                    for (case in caseList) {
+                        repository.insertCase(case, false)
+                    }
+                    member_status.text = "Download selesai!"
+                    startActivity(Intent(this@MainActivity, HomeActivity::class.java))
+                    finish()
+                })
+            } else {
+                member_status.text =
+                    "Anda bukan Anggota kepolisian Kabupaten Bantul, jika anda merasa anggota, silahkan hubungi Admin 'Riwayat'"
+                FirebaseAuth.getInstance().signOut()
+            }
+
+
+        })
+    }
+
     private fun prepareFirebaseUI() {
         val providers = arrayListOf(AuthUI.IdpConfig.PhoneBuilder().build())
 
@@ -59,6 +97,6 @@ class MainActivity : AppCompatActivity() {
                     providers
                 ).build(), RC_SIGN_IN
             )
-        else startActivity(Intent(this@MainActivity, HomeActivity::class.java))
+        else afterLoginDataFetch()
     }
 }

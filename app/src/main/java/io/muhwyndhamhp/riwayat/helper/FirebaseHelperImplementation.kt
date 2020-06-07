@@ -1,12 +1,18 @@
 package io.muhwyndhamhp.riwayat.helper
 
+import FirebaseQueryLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.muhwyndhamhp.riwayat.model.Case
 import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.utils.Constants
+import java.util.*
 
 class FirebaseHelperImplementation : FirebaseHelper {
     private lateinit var database: DatabaseReference
@@ -39,6 +45,51 @@ class FirebaseHelperImplementation : FirebaseHelper {
         return status
     }
 
+    override fun setUuid(uuid: String, phoneNumber: String) {
+        val memberReference = initDatabase().child("members").child(phoneNumber).child("uuid")
+        memberReference.setValue(uuid)
+    }
+
+    override fun getMember(phoneNumber: String): LiveData<DataSnapshot?> {
+        val memberReference = initDatabase().child("members").child(phoneNumber)
+
+        return FirebaseQueryLiveData(memberReference)
+    }
+
+    override fun getAllMembers(): MutableLiveData<DataSnapshot?> {
+
+
+        var gotResult = false
+        val liveDataSnapshot = MutableLiveData<DataSnapshot?>()
+        val memberReference = initDatabase().child("members")
+
+        val eventListener = object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                gotResult = true
+                liveDataSnapshot.postValue(p0)
+            }
+
+        }
+        memberReference.addListenerForSingleValueEvent(eventListener)
+        val timer = Timer()
+        val timerTask: TimerTask = object : TimerTask() {
+            override fun run() {
+                timer.cancel()
+                if (!gotResult) { //  Timeout
+                    memberReference.removeEventListener(eventListener)
+                    // Your timeout code goes here
+                }
+            }
+        }
+        timer.schedule(timerTask, 30000L);
+
+        return liveDataSnapshot
+    }
+
     override fun uploadCase(case: Case): MutableLiveData<Constants.Companion.FirebaseUploadStatus> {
         val status = MutableLiveData(Constants.Companion.FirebaseUploadStatus.WAITING)
         val memberReference = initDatabase().child("cases").child(case.nomorLP)
@@ -57,6 +108,23 @@ class FirebaseHelperImplementation : FirebaseHelper {
             .addOnSuccessListener { status.postValue(Constants.Companion.FirebaseUploadStatus.COMPLETED) }
             .addOnFailureListener { status.postValue(Constants.Companion.FirebaseUploadStatus.FAILED) }
         return status
+    }
+
+    override fun getAllCaseFromServer(): MutableLiveData<DataSnapshot?> {
+        val liveDataSnapshot = MutableLiveData<DataSnapshot?>()
+        val memberReference = initDatabase().child("cases")
+
+        memberReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                liveDataSnapshot.postValue(p0)
+            }
+
+        })
+        return liveDataSnapshot
     }
 
 }

@@ -10,6 +10,6 @@ class InputCaseViewModel(application: Application) : AndroidViewModel(applicatio
     private var repository = AppRepository(application)
 
     fun insertCase(case: Case) {
-        repository.insertCase(case)
+        repository.insertCase(case, true)
     }
 }

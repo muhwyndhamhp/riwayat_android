@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class Member (
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "phoneNumber") var phoneNumber: String = "",
-    @ColumnInfo(name = "memberName") var memberName: String = ""
+    @ColumnInfo(name = "memberName") var memberName: String = "",
+    @ColumnInfo(name = "uuid") var uuid: String = ""
 )

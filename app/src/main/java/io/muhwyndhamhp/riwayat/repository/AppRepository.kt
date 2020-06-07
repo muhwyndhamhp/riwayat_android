@@ -1,7 +1,9 @@
 package io.muhwyndhamhp.riwayat.repository
 
 import android.app.Application
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.database.ktx.getValue
 import io.muhwyndhamhp.riwayat.dao.CaseDao
 import io.muhwyndhamhp.riwayat.dao.CaseNoteDao
 import io.muhwyndhamhp.riwayat.dao.MemberDao
@@ -42,14 +44,38 @@ class AppRepository(application: Application) : CoroutineScope {
     fun getCaseByNomorLp(nomorLp: String) = caseDao?.getCaseByNomorLp(nomorLp)
     fun getCaseByString(string: String) = caseDao?.getCaseByString(string)
 
-    fun insertCase(case: Case) {
-        launch { insertCaseBG(case) }
+    fun getAllCaseFromServer(): MediatorLiveData<List<Case>> {
+        val snapShotConverter = MediatorLiveData<List<Case>>()
+
+        snapShotConverter.addSource(firebaseHelper.getAllCaseFromServer()) { allMemberSnapshot ->
+            allMemberSnapshot?.let {
+                val result = mutableListOf<Case>()
+                for (snapshot in allMemberSnapshot.children) {
+                    result.add(snapshot.getValue<Case>()!!)
+                }
+                snapShotConverter.postValue(result)
+            }
+        }
+        return snapShotConverter
+    }
+
+    fun insertCase(case: Case, isWithServer: Boolean) {
+        launch { insertCaseBG(case, isWithServer) }
     }
 
     fun deleteCase(case: Case) {
         launch { deleteCaseBG(case) }
     }
 
+    fun deleteAllCase() {
+        launch { deleteAllCaseBG() }
+    }
+
+    private suspend fun deleteAllCaseBG() {
+        withContext(Dispatchers.IO){
+            caseDao?.deleteAll()
+        }
+    }
 
     private suspend fun deleteCaseBG(case: Case) {
         withContext(Dispatchers.IO) {
@@ -58,16 +84,34 @@ class AppRepository(application: Application) : CoroutineScope {
         firebaseHelper.deleteCase(case)
     }
 
-    private suspend fun insertCaseBG(case: Case) {
+    private suspend fun insertCaseBG(case: Case, isWithServer: Boolean) {
         withContext(Dispatchers.IO) {
             caseDao?.insertCase(case)
         }
+        if(isWithServer)
         firebaseHelper.uploadCase(case)
     }
 
     /**
      * Below are functions for Member Management
      */
+
+    fun setUuid(uuid: String, phoneNumber: String) = firebaseHelper.setUuid(uuid, phoneNumber)
+
+    fun getAllMemerFromServer(): MediatorLiveData<List<Member>> {
+        val snapShotConverter = MediatorLiveData<List<Member>>()
+
+        snapShotConverter.addSource(firebaseHelper.getAllMembers()) { allMemberSnapshot ->
+            allMemberSnapshot?.let {
+                val result = mutableListOf<Member>()
+                for (snapshot in allMemberSnapshot.children) {
+                    result.add(snapshot.getValue<Member>()!!)
+                }
+                snapShotConverter.postValue(result)
+            }
+        }
+        return snapShotConverter
+    }
 
     fun getAllMember() = memberDao?.getAllMember()
 
@@ -93,6 +137,16 @@ class AppRepository(application: Application) : CoroutineScope {
         withContext(Dispatchers.IO) {
             memberDao?.setMember(member)
 
+        }
+    }
+
+    fun deleteAllMember() {
+        launch { deleteAllMemberBG() }
+    }
+
+    private suspend fun deleteAllMemberBG() {
+        withContext(Dispatchers.IO){
+            memberDao?.deleteAll()
         }
     }
 }
