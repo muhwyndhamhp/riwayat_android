@@ -213,7 +213,7 @@
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
-        <mehdi.sakout.fancybuttons.FancyButton
+        <Button
             android:id="@+id/bt_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -226,11 +226,11 @@
             android:paddingBottom="16dp"
             android:text="ABOUT US "
             android:textColor="@color/white"
+            android:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll_menus"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="1"
-            fancy:fb_radius="30dp" />
+            app:layout_constraintVertical_bias="1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
