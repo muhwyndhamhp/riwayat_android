@@ -7,7 +7,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.model.Case
@@ -40,10 +39,10 @@ class CaseListRVAdapter(val context: Context, val caseList: MutableList<Case>) :
             val builder = AlertDialog.Builder(context)
             builder.setTitle("Hapus Kasus")
             builder.setMessage("Apakah anda yakin akan menghapus kasus ini?")
-            builder.setPositiveButton("YA"){ _, _ ->
+            builder.setPositiveButton("YA") { _, _ ->
                 (context as CaseListActivity).caseListViewModel!!.deleteCase(case)
             }
-            builder.setNegativeButton("TIDAK"){ _, _ ->
+            builder.setNegativeButton("TIDAK") { _, _ ->
             }
             val dialog: AlertDialog = builder.create()
             dialog.show()

@@ -85,7 +85,7 @@ class FirebaseHelperImplementation : FirebaseHelper {
                 }
             }
         }
-        timer.schedule(timerTask, 30000L);
+        timer.schedule(timerTask, 30000L)
 
         return liveDataSnapshot
     }

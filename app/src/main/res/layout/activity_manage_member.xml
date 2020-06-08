@@ -1,19 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ManageMemberActivity">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="21sp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:text="MANAJEMEN ANGGOTA" />
+    </androidx.cardview.widget.CardView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_member"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="240dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="220dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/cv_title"
+        />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_input"
@@ -25,65 +47,50 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp">
+            android:layout_margin="16dp">
 
-            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_member_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="16dp"
-                app:animationDuration="200"
-                app:borderColor="@color/colorPrimary"
-                app:borderWidth="2dp"
-                app:cornerRadius="0dp"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_member_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/edit_text_background_selector"
                     android:hint="@string/nama_anggota"
                     android:importantForAutofill="no"
                     android:inputType="text" />
-            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_member_phone"
                 android:layout_width="match_parent"
+                android:layout_marginTop="16dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="16dp"
-                app:animationDuration="200"
-                app:borderColor="@color/colorPrimary"
-                app:borderWidth="2dp"
-                app:cornerRadius="0dp"
                 app:layout_constraintTop_toBottomOf="@id/til_member_name">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_member_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/edit_text_background_selector"
                     android:hint="@string/nomor_hp"
                     android:importantForAutofill="no"
                     android:inputType="phone" />
-            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
-
-
+            </com.google.android.material.textfield.TextInputLayout>
             <Button
                 android:id="@+id/bt_input_member"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorAccent"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:backgroundTint="@color/colorAccent"
                 android:paddingStart="30dp"
-                android:paddingEnd="30dp"
                 android:paddingTop="20dp"
+                android:paddingEnd="30dp"
                 android:paddingBottom="20dp"
                 android:text="@string/tambahkan_anggota"
                 android:textColor="@color/white"

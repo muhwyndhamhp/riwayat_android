@@ -1,5 +1,6 @@
 package io.muhwyndhamhp.riwayat.adapter
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -41,8 +42,23 @@ class MemberRVAdapter(val context: Context, private val memberList: List<Member>
                 itemView.bt_delete_member.setBackgroundColor(ResourcesCompat.getColor(context.resources, R.color.light_gray, null))
             }
             itemView.bt_delete_member.setOnClickListener {
+                dialogBuilder(context, member)
+            }
+
+
+        }
+        private fun dialogBuilder(context: Context, member: Member) {
+
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("Hapus Anggota")
+            builder.setMessage("Apakah anda yakin akan menghapus ${member.memberName} dari keanggotaan?")
+            builder.setPositiveButton("YA") { _, _ ->
                 (context as ManageMemberActivity).deleteMember(member)
             }
+            builder.setNegativeButton("TIDAK") { _, _ ->
+            }
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
     }
 

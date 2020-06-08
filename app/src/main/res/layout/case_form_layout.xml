@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,12 +12,14 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="16dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -29,33 +31,28 @@
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
-                <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    app:animationDuration="200"
-                    app:borderColor="@color/colorPrimary"
-                    app:borderWidth="2dp"
-                    app:cornerRadius="0dp">
+                    android:layout_marginTop="10dp">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_nomor_lp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="No. LP"
                         android:singleLine="true" />
 
-                </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="16dp"
-                    app:animationDuration="200"
-                    app:borderColor="@color/colorPrimary"
-                    app:borderWidth="2dp"
-                    app:cornerRadius="0dp">
+                    android:layout_marginTop="10dp">
 
                     <EditText
                         android:id="@+id/et_nama_pelapor"
@@ -64,17 +61,14 @@
                         android:hint="Nama Pelapor"
                         android:singleLine="true" />
 
-                </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="16dp"
-                    app:animationDuration="200"
-                    app:borderColor="@color/colorPrimary"
-                    app:borderWidth="2dp"
-                    app:cornerRadius="0dp">
+                    android:layout_marginTop="10dp">
 
                     <EditText
                         android:id="@+id/et_hp_pelapor"
@@ -84,17 +78,15 @@
                         android:inputType="phone"
                         android:singleLine="true" />
 
-                </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+                >
 
-                <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="16dp"
-                    app:animationDuration="200"
-                    app:borderColor="@color/colorPrimary"
-                    app:borderWidth="2dp"
-                    app:cornerRadius="0dp">
+                    android:layout_marginTop="10dp">
 
                     <EditText
                         android:id="@+id/et_alamat_pelapor"
@@ -102,8 +94,7 @@
                         android:layout_height="wrap_content"
                         android:hint="Alamat Pelapor"
                         android:singleLine="true" />
-
-                </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -115,7 +106,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="16dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -127,16 +118,13 @@
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
-                <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_waktu_kejadian"
-                    android:layout_width="200dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="16dp"
-                    app:animationDuration="200"
-                    app:borderColor="@color/colorPrimary"
-                    app:borderWidth="2dp"
-                    app:cornerRadius="0dp">
+                    android:layout_marginTop="10dp">
 
                     <EditText
                         android:id="@+id/et_waktu_kejadian"
@@ -147,7 +135,7 @@
                         android:hint="Waktu Kejadian"
                         android:singleLine="true" />
 
-                </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -155,15 +143,13 @@
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
-                    <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="20"
-                        android:padding="16dp"
-                        app:animationDuration="200"
-                        app:borderColor="@color/colorPrimary"
-                        app:borderWidth="2dp"
-                        app:cornerRadius="0dp">
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="3">
 
                         <EditText
                             android:id="@+id/et_lokasi_kejadian"
@@ -171,18 +157,22 @@
                             android:layout_height="wrap_content"
                             android:hint="Lokasi Kejadian"
                             android:singleLine="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
-
-                    <ImageButton
+                    <Button
                         android:id="@+id/ib_select_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:backgroundTint="@color/white"
-                        android:foregroundTint="@color/colorPrimary"
-                        android:src="@drawable/ic_add_location_black_24dp" />
+                        android:drawableStart="@drawable/ic_add_location_black_24dp"
+                        android:drawableTint="@color/colorAccent"
+                        android:foregroundTint="@color/colorAccent"
+                        android:src="@drawable/ic_add_location_black_24dp"
+                        android:text="Pilih Lokasi"
+                        android:textColor="@color/colorAccent" />
 
                 </LinearLayout>
 
@@ -198,15 +188,12 @@
                         android:layout_width="150dp"
                         android:layout_height="match_parent" />
 
-                    <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="20"
-                        android:padding="16dp"
-                        app:animationDuration="200"
-                        app:borderColor="@color/colorPrimary"
-                        app:borderWidth="2dp"
-                        app:cornerRadius="0dp">
+                        android:layout_marginTop="10dp">
 
                         <EditText
                             android:id="@+id/et_lac_cid"
@@ -216,7 +203,7 @@
                             android:inputType="number"
                             android:singleLine="true" />
 
-                    </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
@@ -227,17 +214,14 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp" />
 
-                <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_pidana_lain"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:padding="16dp"
-                    android:visibility="gone"
-                    app:animationDuration="200"
-                    app:borderColor="@color/colorPrimary"
-                    app:borderWidth="2dp"
-                    app:cornerRadius="0dp">
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/et_pidana_lain"
@@ -245,8 +229,7 @@
                         android:layout_height="wrap_content"
                         android:hint="Jenis Pidana"
                         android:singleLine="true" />
-
-                </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -258,7 +241,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="16dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -271,6 +254,7 @@
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_saksi_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -285,6 +269,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_saksi_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -300,6 +285,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_saksi_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -315,6 +301,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_saksi_4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -330,6 +317,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_saksi_5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -350,12 +338,12 @@
                     android:layout_height="0dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="20dp"
-                    android:text="Tambah saksi"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
+                    android:drawableStart="@drawable/ic_add_black_24dp"
                     android:drawableTint="@color/colorAccent"
-                    android:textColor="@color/colorAccent"
-                    android:drawableStart="@drawable/ic_add_black_24dp" />
+                    android:text="Tambah saksi"
+                    android:textColor="@color/colorAccent" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -368,7 +356,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="16dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -381,7 +369,9 @@
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_hasil_lidik"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp">

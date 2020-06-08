@@ -9,6 +9,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textSize="24sp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                android:text="EDIT KASUS BARU" />
+        </androidx.cardview.widget.CardView>
+
         <include
             android:id="@+id/layout_form"
             layout="@layout/case_form_layout" />

@@ -2,11 +2,11 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
     android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:layout_height="wrap_content">
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -43,8 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Tindak Pidana"
-            android:textStyle="bold"
             android:textColor="@color/colorAccent"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_nama_pelapor" />
 
@@ -52,8 +52,8 @@
             android:id="@+id/tv_lokasi_kejadian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="220dp"
             android:layout_marginTop="5dp"
+            android:maxWidth="220dp"
             android:text="Alamat lokasi kejadian disini dalam bentuk alamat tertulis ada disini"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_tindak_pidana" />
@@ -64,8 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Anonim"
-            android:textStyle="bold"
             android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_lokasi_kejadian" />
 
@@ -73,24 +73,23 @@
             android:id="@+id/bt_edit_case"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="edit"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/colorAccent"
+            android:text="edit"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/tv_petugas"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/tv_petugas" />
+
         <Button
             android:id="@+id/bt_delete_case"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="delete"
             android:layout_marginStart="10dp"
             android:backgroundTint="@color/white"
+            android:text="delete"
             android:textColor="@color/colorAccent"
-            app:layout_constraintTop_toTopOf="@id/bt_edit_case"
             app:layout_constraintStart_toEndOf="@id/bt_edit_case"
-            />
+            app:layout_constraintTop_toTopOf="@id/bt_edit_case" />
 
         <ImageView
             android:id="@+id/iv_pidana_icon"
@@ -98,8 +97,7 @@
             android:layout_height="100dp"
             android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
