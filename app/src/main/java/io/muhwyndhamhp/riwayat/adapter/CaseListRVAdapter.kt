@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,12 @@ class CaseListRVAdapter(val context: Context, val caseList: MutableList<Case>) :
             itemView.tv_nama_pelapor.text = "Pelapor:\n" + case.namaPelapor
             itemView.tv_lokasi_kejadian.text = "Lokasi kejadian:\n" + case.lokasiKejadian
             itemView.tv_tindak_pidana.text = case.tindakPidana
-            itemView.iv_pidana_icon.setBackgroundResource(selectDrawable(case.tindakPidana))
+            itemView.iv_pidana_icon.apply {
+                setBackgroundResource(selectDrawable(case.tindakPidana))
+                setColorFilter(
+                    Color.RED
+                );
+            }
             itemView.bt_edit_case.setOnClickListener {
                 val intent = Intent(context, EditCaseActivity::class.java)
                 intent.putExtra(NOMOR_LP, case.nomorLP)
@@ -37,6 +43,17 @@ class CaseListRVAdapter(val context: Context, val caseList: MutableList<Case>) :
                 val intent = Intent(context, CaseDetailActivity::class.java)
                 intent.putExtra(NOMOR_LP, case.nomorLP)
                 (context as CaseListActivity).startActivity(intent)
+            }
+        }
+
+        private fun selectColor(case: Case): String {
+            return when (case.tindakPidana) {
+                "Pembunuhan" -> "#6202EE"
+                "Curat" -> "#EF00B0"
+                "Curas" -> "#FF0072"
+                "Penganiayaan" -> "#FF7444"
+                "Curanmor" -> "#FFBE3B"
+                else -> "#F9F871"
             }
         }
 

@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    app:cardCornerRadius="20dp"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
     android:layout_marginTop="5dp"
@@ -41,22 +42,28 @@
             android:id="@+id/tv_tindak_pidana"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background_deselected"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:layout_marginTop="10dp"
             android:text="Tindak Pidana"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_nama_pelapor" />
 
         <TextView
             android:id="@+id/tv_lokasi_kejadian"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:maxWidth="220dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_background_selected"
+            android:padding="10dp"
             android:text="Alamat lokasi kejadian disini dalam bentuk alamat tertulis ada disini"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_tindak_pidana" />
+            app:layout_constraintTop_toBottomOf="@id/iv_pidana_icon" />
 
         <TextView
             android:id="@+id/tv_petugas"

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -22,21 +23,28 @@
                 android:layout_margin="16dp"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="INFORMASI PELAPOR"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:backgroundTint="@color/colorAccent"
+                    app:cardCornerRadius="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="INFORMASI PELAPOR"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </androidx.cardview.widget.CardView>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:boxStrokeColor="@color/stroke_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_nomor_lp"
@@ -48,11 +56,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:boxStrokeColor="@color/stroke_color">
 
                     <EditText
                         android:id="@+id/et_nama_pelapor"
@@ -64,11 +72,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:boxStrokeColor="@color/stroke_color">
 
                     <EditText
                         android:id="@+id/et_hp_pelapor"
@@ -82,11 +90,11 @@
                 >
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:boxStrokeColor="@color/stroke_color">
 
                     <EditText
                         android:id="@+id/et_alamat_pelapor"
@@ -101,7 +109,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -109,22 +118,29 @@
                 android:layout_margin="16dp"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="INFORMASI KEJADIAN"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:backgroundTint="@color/colorAccent"
+                    app:cardCornerRadius="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="INFORMASI KEJADIAN"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </androidx.cardview.widget.CardView>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_waktu_kejadian"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:boxStrokeColor="@color/stroke_color">
 
                     <EditText
                         android:id="@+id/et_waktu_kejadian"
@@ -144,12 +160,12 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_weight="3">
+                        android:layout_weight="3"
+                        app:boxStrokeColor="@color/stroke_color">
 
                         <EditText
                             android:id="@+id/et_lokasi_kejadian"
@@ -189,11 +205,11 @@
                         android:layout_height="match_parent" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="10dp"
+                        app:boxStrokeColor="@color/stroke_color">
 
                         <EditText
                             android:id="@+id/et_lac_cid"
@@ -215,13 +231,13 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_pidana_lain"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    app:boxStrokeColor="@color/stroke_color">
 
                     <EditText
                         android:id="@+id/et_pidana_lain"
@@ -236,7 +252,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -244,21 +261,29 @@
                 android:layout_margin="16dp"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="SAKSI"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:backgroundTint="@color/colorAccent"
+                    app:cardCornerRadius="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="SAKSI"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </androidx.cardview.widget.CardView>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_saksi_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:boxStrokeColor="@color/stroke_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_saksi_1"
@@ -269,12 +294,12 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_saksi_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    app:boxStrokeColor="@color/stroke_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_saksi_2"
@@ -285,12 +310,12 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_saksi_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    app:boxStrokeColor="@color/stroke_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_saksi_3"
@@ -301,12 +326,12 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_saksi_4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    app:boxStrokeColor="@color/stroke_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_saksi_4"
@@ -317,12 +342,12 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_saksi_5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    app:boxStrokeColor="@color/stroke_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_saksi_5"
@@ -351,7 +376,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -359,22 +385,29 @@
                 android:layout_margin="16dp"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="HASIL LIDIK"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:backgroundTint="@color/colorAccent"
+                    app:cardCornerRadius="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="HASIL LIDIK"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </androidx.cardview.widget.CardView>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:boxStrokeColor="@color/stroke_color"
                     android:id="@+id/til_hasil_lidik"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:boxStrokeColor="@color/stroke_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_hasil_lidik"

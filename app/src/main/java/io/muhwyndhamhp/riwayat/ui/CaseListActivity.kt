@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.adapter.CaseListRVAdapter
 import io.muhwyndhamhp.riwayat.model.Case
@@ -22,6 +23,7 @@ class CaseListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_case_list)
 
+//        Glide.with(this).load(R.raw.smart_city).into(cl_background)
         caseListViewModel = ViewModelProvider(this).get(CaseListViewModel::class.java)
 
         renderCaseList()
