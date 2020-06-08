@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.EditCaseActivity"></activity>
+        <activity android:name=".ui.CaseDetailActivity"></activity>
+        <activity android:name=".ui.EditCaseActivity" />
         <activity android:name=".ui.CaseListActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

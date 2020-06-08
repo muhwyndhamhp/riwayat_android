@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.model.Case
+import io.muhwyndhamhp.riwayat.ui.CaseDetailActivity
 import io.muhwyndhamhp.riwayat.ui.CaseListActivity
 import io.muhwyndhamhp.riwayat.ui.EditCaseActivity
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.NOMOR_LP
@@ -32,6 +33,11 @@ class CaseListRVAdapter(val context: Context, val caseList: MutableList<Case>) :
             }
             itemView.bt_delete_case.setOnClickListener { dialogBuilder(context, case) }
             itemView.tv_petugas.text = "Petugas: " + case.petugas
+            itemView.setOnClickListener {
+                val intent = Intent(context, CaseDetailActivity::class.java)
+                intent.putExtra(NOMOR_LP, case.nomorLP)
+                (context as CaseListActivity).startActivity(intent)
+            }
         }
 
         private fun dialogBuilder(context: Context, case: Case) {
