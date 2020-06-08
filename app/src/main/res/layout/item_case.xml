@@ -44,6 +44,7 @@
             android:layout_marginTop="10dp"
             android:text="Tindak Pidana"
             android:textStyle="bold"
+            android:textColor="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_nama_pelapor" />
 
@@ -56,6 +57,18 @@
             android:text="Alamat lokasi kejadian disini dalam bentuk alamat tertulis ada disini"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_tindak_pidana" />
+
+        <TextView
+            android:id="@+id/tv_petugas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Anonim"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_lokasi_kejadian" />
+
         <Button
             android:id="@+id/bt_edit_case"
             android:layout_width="wrap_content"
@@ -64,7 +77,7 @@
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/colorAccent"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/tv_lokasi_kejadian"
+            app:layout_constraintTop_toBottomOf="@id/tv_petugas"
             app:layout_constraintStart_toStartOf="parent"
             />
         <Button

@@ -32,6 +32,7 @@ class CaseListRVAdapter(val context: Context, val caseList: MutableList<Case>) :
                 (context as CaseListActivity).startActivity(intent)
             }
             itemView.bt_delete_case.setOnClickListener { dialogBuilder(context, case) }
+            itemView.tv_petugas.text = "Petugas: " + case.petugas
         }
 
         private fun dialogBuilder(context: Context, case: Case) {
