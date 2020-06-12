@@ -11,15 +11,14 @@ import io.muhwyndhamhp.riwayat.dao.MemberDao
 import io.muhwyndhamhp.riwayat.database.RoomDatabase
 import io.muhwyndhamhp.riwayat.helper.FirebaseHelperImplementation
 import io.muhwyndhamhp.riwayat.model.Case
+import io.muhwyndhamhp.riwayat.model.CaseNote
 import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.utils.Constants
-import io.muhwyndhamhp.riwayat.utils.Constants.Companion.CHILD_ADDED
-import io.muhwyndhamhp.riwayat.utils.Constants.Companion.CHILD_CHANGED
-import io.muhwyndhamhp.riwayat.utils.Constants.Companion.CHILD_REMOVED
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import kotlin.coroutines.CoroutineContext
 
 class AppRepository(application: Application) : CoroutineScope {
@@ -38,6 +37,25 @@ class AppRepository(application: Application) : CoroutineScope {
         caseDao = db?.caseDao()
         caseNoteDao = db?.caseNoteDao()
         firebaseHelper = FirebaseHelperImplementation()
+    }
+
+
+    /**
+     * Below are functions for CaseNote Management
+     */
+
+
+    fun uploadCaseNote(caseNote: CaseNote, isWithServer: Boolean) {
+        launch { uploadCaseNoteBG(caseNote, isWithServer) }
+    }
+
+    private suspend fun uploadCaseNoteBG(caseNote: CaseNote, isWithServer: Boolean) {
+        withContext(Dispatchers.IO) {
+            caseNoteDao!!.insertCaseNote(caseNote)
+            if (isWithServer) {
+                firebaseHelper.uploadCaseNote(caseNote)
+            }
+        }
     }
 
     /**
@@ -111,8 +129,15 @@ class AppRepository(application: Application) : CoroutineScope {
             val a = caseDao?.deleteAll()
             for (case in caseList) {
                 caseDao?.insertCase(case)
-            }
 
+                if (case.caseNotes.isNotEmpty()) {
+                    val caseNotes: List<CaseNote> = case.caseNotes.values.toList()
+                    for (caseNote in caseNotes) {
+                        caseNoteDao?.insertCaseNote(caseNote)
+
+                    }
+                }
+            }
             refreshed.postValue(true)
         }
 
@@ -197,4 +222,7 @@ class AppRepository(application: Application) : CoroutineScope {
             memberDao?.deleteAll()
         }
     }
+
+    fun uploadImages(compressedImages: MutableList<File>) =
+        firebaseHelper.uploadImage(compressedImages)
 }

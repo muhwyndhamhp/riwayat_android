@@ -69,6 +69,11 @@ class CaseDetailActivity : AppCompatActivity() {
         )
         lv_saksi.adapter = adapter
         tv_hasil_lidik.text = currentCase.hasilLidik
+        bt_add_case_note.setOnClickListener {
+            val intent = Intent(this, InputNoteActivity::class.java)
+            intent.putExtra(NOMOR_LP, currentCase.nomorLP)
+            startActivity(intent)
+        }
     }
 
     private fun dialogBuilder(context: Context, case: Case) {
@@ -97,9 +102,7 @@ class CaseDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToMaps() {
-
-    }
+    private fun navigateToMaps() {}
 
     private fun parseWaktuKejadian(): CharSequence? {
         val date = Date(currentCase.waktuKejadian)

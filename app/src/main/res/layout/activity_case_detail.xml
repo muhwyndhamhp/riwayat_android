@@ -234,7 +234,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:backgroundTint="@color/white"
-                    android:text="delete"
+                    android:text="Hapus"
                     android:textColor="@color/colorAccent"
                     app:layout_constraintStart_toEndOf="@id/bt_edit_case"
                     app:layout_constraintTop_toTopOf="@id/bt_edit_case" />

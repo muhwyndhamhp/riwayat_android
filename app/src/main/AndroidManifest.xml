@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.CaseDetailActivity"></activity>
+        <activity android:name=".ui.InputNoteActivity"></activity>
+        <activity android:name=".ui.CaseDetailActivity" />
         <activity android:name=".ui.EditCaseActivity" />
         <activity android:name=".ui.CaseListActivity" />
         <!--

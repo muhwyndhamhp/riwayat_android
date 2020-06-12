@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import io.muhwyndhamhp.riwayat.model.Case
+import io.muhwyndhamhp.riwayat.model.CaseNote
 import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.utils.Constants
+import java.io.File
 
 interface FirebaseHelper {
     fun uploadMember(member: Member) : MutableLiveData<Constants.Companion.FirebaseUploadStatus>
@@ -25,4 +27,8 @@ interface FirebaseHelper {
     fun getAllCaseFromServer() : MutableLiveData<DataSnapshot?>
 
     fun getCaseChildListener() : MutableLiveData<Pair<String, DataSnapshot>?>
+
+    fun uploadImage(imageList : MutableList<File>) : MutableLiveData<String>
+
+    fun uploadCaseNote(caseNote: CaseNote) : MutableLiveData<Constants.Companion.FirebaseUploadStatus>
 }

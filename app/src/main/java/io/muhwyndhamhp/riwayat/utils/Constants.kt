@@ -22,5 +22,7 @@ class Constants {
         const val CHILD_CHANGED = "CHILD_CHANGED"
         const val CHILD_ADDED = "CHILD_ADDED"
         const val CHILD_REMOVED = "CHILD_REMOVED"
+
+        const val GLIGAR_PICKER = 64353
     }
 }

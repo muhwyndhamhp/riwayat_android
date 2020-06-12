@@ -20,5 +20,5 @@ data class Case (
     var daftarSaksi : List<String> = mutableListOf(),
     @ColumnInfo(name = "hasil_lidik") var hasilLidik: String = "",
     @ColumnInfo(name="petugas") var petugas: String = "Anonim",
-    @Ignore var caseNotes: List<CaseNote> = mutableListOf()
+    @Ignore var caseNotes: Map<String, CaseNote> = mapOf< String, CaseNote>()
 )

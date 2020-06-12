@@ -1,17 +1,22 @@
 package io.muhwyndhamhp.riwayat.helper
 
 import FirebaseQueryLiveData
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 import io.muhwyndhamhp.riwayat.model.Case
+import io.muhwyndhamhp.riwayat.model.CaseNote
 import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.utils.Constants
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.CHILD_ADDED
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.CHILD_CHANGED
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.CHILD_REMOVED
+import java.io.File
 import java.util.*
 
 class FirebaseHelperImplementation : FirebaseHelper {
@@ -157,4 +162,42 @@ class FirebaseHelperImplementation : FirebaseHelper {
         return liveDataSnapshot
     }
 
+    override fun uploadImage(imageList: MutableList<File>): MutableLiveData<String> {
+        val storage = Firebase.storage.reference.child("caseNoteImages")
+        return uploadImageRecurse(storage, imageList)
+    }
+
+    override fun uploadCaseNote(caseNote: CaseNote): MutableLiveData<Constants.Companion.FirebaseUploadStatus> {
+        val status = MutableLiveData(Constants.Companion.FirebaseUploadStatus.WAITING)
+        val memberReference =
+            initDatabase().child("cases").child(caseNote.nomorLP).child("caseNotes")
+                .child(caseNote.timestamp.toString())
+        memberReference
+            .setValue(caseNote)
+            .addOnSuccessListener { status.postValue(Constants.Companion.FirebaseUploadStatus.COMPLETED) }
+            .addOnFailureListener { status.postValue(Constants.Companion.FirebaseUploadStatus.FAILED) }
+        return status
+    }
+
+    private fun uploadImageRecurse(
+        storage: StorageReference,
+        imageList: MutableList<File>
+    ): MutableLiveData<String> {
+        val downloadURLs = MutableLiveData<String>()
+        for (a in imageList.indices) {
+            val photoRef = storage.child(System.currentTimeMillis().toString() + ".jpg")
+
+            photoRef.putFile(Uri.fromFile(imageList[a])).continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let { throw it }
+                }
+                photoRef.downloadUrl
+            }.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    downloadURLs.postValue(task.result.toString())
+                }
+            }
+        }
+        return downloadURLs
+    }
 }
