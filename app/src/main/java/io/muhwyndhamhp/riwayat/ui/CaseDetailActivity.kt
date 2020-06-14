@@ -122,7 +122,7 @@ class CaseDetailActivity : AppCompatActivity() {
     private fun parseWaktuKejadian(): CharSequence? {
         val date = Date(currentCase.waktuKejadian)
         val locale = Locale("id", "ID")
-        val simpleDateFormat = SimpleDateFormat("dd MMMM yyyy, hh.mm", locale)
+        val simpleDateFormat = SimpleDateFormat("dd MMMM yyyy, HH.mm", locale)
         return simpleDateFormat.format(date)
     }
 }
