@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/colorAccent"
+    android:layout_marginStart="40dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="10dp"
+    app:cardCornerRadius="20dp"
+
+    android:layout_marginBottom="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:id="@+id/tv_waktu_kejadian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="26 Januari 2020, 12:34"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_judul_catatan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Judul Catatan"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_waktu_kejadian" />
+
+        <LinearLayout
+            android:id="@+id/ll_body_catatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_background_selected"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_judul_catatan">
+
+            <TextView
+                android:id="@+id/tv_body_catatan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alamat lokasi kejadian disini dalam bentuk alamat tertulis ada disini" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_iv_group1"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_body_catatan">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cc_1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_curanmor"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cc_2"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_curanmor"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cc_3"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_curanmor"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_iv_group_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_iv_group1">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cc_4"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_curanmor"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cc_5"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_curanmor"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cc_6"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_curanmor"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

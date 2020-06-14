@@ -9,7 +9,9 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.muhwyndhamhp.riwayat.R
+import io.muhwyndhamhp.riwayat.adapter.CaseNoteAdapter
 import io.muhwyndhamhp.riwayat.model.Case
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.NOMOR_LP
 import io.muhwyndhamhp.riwayat.viewmodel.CaseDetailViewModel
@@ -22,6 +24,8 @@ class CaseDetailActivity : AppCompatActivity() {
     private lateinit var currentCase: Case
     private lateinit var viewModel: CaseDetailViewModel
 
+    private lateinit var adapter: CaseNoteAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_case_detail)
@@ -29,6 +33,7 @@ class CaseDetailActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(CaseDetailViewModel::class.java)
 
         inflateInitialContent()
+
     }
 
     private fun inflateInitialContent() {
@@ -37,6 +42,16 @@ class CaseDetailActivity : AppCompatActivity() {
             currentCase = it
 
             inflateView()
+
+            inflateCaseNote()
+        })
+    }
+
+    private fun inflateCaseNote() {
+        viewModel.getCaseNotes(currentCase.nomorLP)!!.observe(this, Observer {
+            adapter = CaseNoteAdapter(this, it)
+            rv_case_note.adapter = adapter
+            rv_case_note.layoutManager = LinearLayoutManager(this)
         })
     }
 

@@ -58,6 +58,7 @@ class AppRepository(application: Application) : CoroutineScope {
         }
     }
 
+    fun getCaseNoteByNomorLP(nomorLp: String) = caseNoteDao?.getCaseNoteByNomorLp(nomorLp)
     /**
      * Below are functions for Case Management
      */

@@ -11,6 +11,7 @@ class CaseDetailViewModel(application: Application): AndroidViewModel(applicatio
 
     fun getCase(nomorLP : String) = repository.getCaseByNomorLp(nomorLP)
     fun deleteCase(case: Case) = repository.deleteCase(case)
+    fun getCaseNotes(nomorLP: String) = repository.getCaseNoteByNomorLP(nomorLP)
 
 
 }
