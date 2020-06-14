@@ -77,8 +77,12 @@ class InputNoteActivity : AppCompatActivity() {
 
                     if(imageLocalRefList.isNotEmpty())
                     {
+                        tv_process.text = "Mengupload gambar..."
+                        tv_process.visibility = View.VISIBLE
                         viewModel.uploadImages(imageLocalRefList, this, this)
                             .observe(this, Observer { downloadURLs ->
+                                tv_process.text = "Menambahkan catatan..."
+                                tv_process.visibility = View.VISIBLE
                                 if (downloadURLs.isNotEmpty()) {
                                     val caseNote = CaseNote(
                                         System.currentTimeMillis(),
@@ -95,6 +99,8 @@ class InputNoteActivity : AppCompatActivity() {
                             })
                     }
                     else {
+                        tv_process.text = "Menambahkan catatan..."
+                        tv_process.visibility = View.VISIBLE
                         val caseNote = CaseNote(
                             System.currentTimeMillis(),
                             currentCase.nomorLP,
@@ -130,7 +136,7 @@ class InputNoteActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GLIGAR_PICKER) {
-            if(requestCode == Activity.RESULT_OK){
+            if(resultCode == Activity.RESULT_OK){
                 val imagesList = data?.extras!!.getStringArray(GligarPicker.IMAGES_RESULT)
                 if (!imagesList.isNullOrEmpty()) {
                     imageLocalRefList.addAll(imagesList.toList())

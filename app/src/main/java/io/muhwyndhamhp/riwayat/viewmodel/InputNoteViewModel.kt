@@ -30,7 +30,7 @@ class InputNoteViewModel(application: Application) : AndroidViewModel(applicatio
             val compressedImages = mutableListOf<File>()
             for (string in imageLocalRefList) {
                 val imageFile = File(string)
-                val compressedImage = Compressor.compress(context, imageFile, Dispatchers.Main) {
+                val compressedImage = Compressor.compress(context, imageFile) {
                     quality(60)
                     size(204_800)
                     format(Bitmap.CompressFormat.JPEG)
