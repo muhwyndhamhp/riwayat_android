@@ -198,7 +198,8 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                     tindakPidana,
                     daftarSaksi,
                     hasilLidik,
-                    currentMember.memberName
+                    currentMember.memberName,
+                    System.currentTimeMillis()
                 )
 
                 editCaseViewModel!!.insertCase(case)

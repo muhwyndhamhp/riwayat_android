@@ -122,7 +122,8 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                     tindakPidana,
                     daftarSaksi,
                     hasilLidik,
-                    currentMember.memberName
+                    currentMember.memberName,
+                    System.currentTimeMillis()
                 )
 
                 inputCaseViewModel!!.insertCase(case)

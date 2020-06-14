@@ -6,4 +6,8 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="light_gray">#dddddd</color>
+    <color name="counter_bg">#6202ee</color>
+    <color name="toolbar_bg">#6202ee</color>
+    <color name="change_album_color">#ffffff</color>
+    <color name="permission_alert_color">#ffffff</color>
 </resources>

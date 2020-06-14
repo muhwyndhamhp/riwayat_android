@@ -1,5 +1,6 @@
 package io.muhwyndhamhp.riwayat.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -129,12 +130,14 @@ class InputNoteActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GLIGAR_PICKER) {
-            val imagesList = data?.extras!!.getStringArray(GligarPicker.IMAGES_RESULT)
-            if (!imagesList.isNullOrEmpty()) {
-                imageLocalRefList.addAll(imagesList.toList())
+            if(requestCode == Activity.RESULT_OK){
+                val imagesList = data?.extras!!.getStringArray(GligarPicker.IMAGES_RESULT)
+                if (!imagesList.isNullOrEmpty()) {
+                    imageLocalRefList.addAll(imagesList.toList())
 
-                if (imageLocalRefList.isNotEmpty()) {
-                    setImageAsset()
+                    if (imageLocalRefList.isNotEmpty()) {
+                        setImageAsset()
+                    }
                 }
             }
         }
