@@ -26,7 +26,7 @@
                 android:paddingEnd="20dp"
                 android:textColor="@color/colorAccent"
                 android:textStyle="bold"
-                android:text="EDIT KASUS BARU" />
+                android:text="EDIT KASUS" />
         </androidx.cardview.widget.CardView>
 
         <include
@@ -44,7 +44,7 @@
             android:paddingTop="20dp"
             android:paddingRight="30dp"
             android:paddingBottom="20dp"
-            android:text="EDIT KASUS"
+            android:text="SIMPAN"
             android:textColor="@color/white" />
     </LinearLayout>
 

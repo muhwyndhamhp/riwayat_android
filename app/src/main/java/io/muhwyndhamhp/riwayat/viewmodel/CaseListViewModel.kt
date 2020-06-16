@@ -25,6 +25,6 @@ class CaseListViewModel(application: Application) : AndroidViewModel(application
 
 
     fun deleteCase(case: Case) = repository.deleteCase(case)
-
+    fun getCasesThatContainsStrings(s: String) = repository.getCaseByString(s)
 
 }

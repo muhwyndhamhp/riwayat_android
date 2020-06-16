@@ -20,7 +20,7 @@ import java.util.*
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var adapter: HomeCaseNoteAdapter
-    private val timer = Timer()
+    var timer = Timer()
     private val handler = Handler()
     private var position = 0
     private var arraySize = 0
@@ -77,6 +77,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun attachTimer() {
+        timer.cancel()
+        timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 handler.post {
@@ -87,6 +89,15 @@ class HomeActivity : AppCompatActivity() {
             }
 
         }, 5000, 5000)
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        timer.cancel()
     }
 
     private fun getCurrentUser() {
