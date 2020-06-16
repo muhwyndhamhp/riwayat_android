@@ -39,6 +39,8 @@ class CaseNoteAdapter(val context: Context, val caseNoteList: List<CaseNote>) :
                     }
                 }
             }
+
+            itemView.tv_nama_petugas.text = "Petugas: ${caseNote.petugas}"
         }
 
         private fun parseWaktuKejadian(timestamp: Long): String {

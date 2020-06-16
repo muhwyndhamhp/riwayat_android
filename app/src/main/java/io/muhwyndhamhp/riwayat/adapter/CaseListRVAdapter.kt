@@ -28,9 +28,6 @@ class CaseListRVAdapter(val context: Context, val caseList: MutableList<Case>) :
             itemView.tv_tindak_pidana.text = case.tindakPidana
             itemView.iv_pidana_icon.apply {
                 setBackgroundResource(selectDrawable(case.tindakPidana))
-                setColorFilter(
-                    Color.RED
-                );
             }
             itemView.bt_edit_case.setOnClickListener {
                 val intent = Intent(context, EditCaseActivity::class.java)

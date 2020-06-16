@@ -226,4 +226,6 @@ class AppRepository(application: Application) : CoroutineScope {
 
     fun uploadImages(compressedImages: MutableList<File>) =
         firebaseHelper.uploadImage(compressedImages)
+
+    fun getNewestCases() = caseDao?.getLatestCases()
 }

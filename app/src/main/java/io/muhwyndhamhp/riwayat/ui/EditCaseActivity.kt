@@ -97,6 +97,7 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 saksiETLList[i].setText(daftarSaksi[i])
                 saksiTILList[i].visibility = View.VISIBLE
                 if (i == 4) ib_add_saksi.visibility = View.GONE
+                saksiCounter = daftarSaksi.size
             }
         }
     }
