@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/cv_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/black"
     tools:context=".ui.HomeActivity">
 
         <ImageView
