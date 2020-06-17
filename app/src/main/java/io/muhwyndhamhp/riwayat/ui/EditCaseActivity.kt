@@ -70,7 +70,7 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
         })
 
         editCaseViewModel!!.getCaseNotes(nomorLp)!!.observe(this, Observer {
-            for(caseNote in it){
+            for (caseNote in it) {
                 currentCaseNotes[caseNote.timestamp.toString()] = caseNote
             }
         })
