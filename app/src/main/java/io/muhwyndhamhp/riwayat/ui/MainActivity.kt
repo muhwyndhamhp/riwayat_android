@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                 })
             } else {
                 member_status.text =
-                    "Anda bukan Anggota kepolisian Kabupaten Bantul, jika anda merasa anggota, silahkan hubungi Admin 'Riwayat'"
+                    "Anda bukan Anggota kepolisian Kabupaten Bantul.\nJika anda merupakan anggota, silahkan hubungi Admin aplikasi"
                 FirebaseAuth.getInstance().signOut()
             }
 
