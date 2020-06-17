@@ -19,6 +19,7 @@ import com.michaldrabik.classicmaterialtimepicker.utilities.setOnDatePickedListe
 import com.michaldrabik.classicmaterialtimepicker.utilities.setOnTime24PickedListener
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.model.Case
+import io.muhwyndhamhp.riwayat.model.CaseNote
 import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_ADDRESS
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LAT
@@ -38,6 +39,7 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     private lateinit var latLong: LatLng
     private lateinit var currentMember: Member
     private lateinit var currentCase: Case
+    private var currentCaseNotes = mutableMapOf<String, CaseNote>()
 
     private var editCaseViewModel: InputCaseViewModel? = null
 
@@ -64,6 +66,12 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             if (it != null) {
                 currentCase = it
                 inflateCaseToUI()
+            }
+        })
+
+        editCaseViewModel!!.getCaseNotes(nomorLp)!!.observe(this, Observer {
+            for(caseNote in it){
+                currentCaseNotes[caseNote.timestamp.toString()] = caseNote
             }
         })
     }
@@ -200,7 +208,8 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                     daftarSaksi,
                     hasilLidik,
                     currentMember.memberName,
-                    System.currentTimeMillis()
+                    System.currentTimeMillis(),
+                    currentCaseNotes
                 )
 
                 editCaseViewModel!!.insertCase(case)
