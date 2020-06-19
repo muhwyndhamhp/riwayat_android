@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/tv_nomor_lp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="No. Lp xxxx-xxxx-xxxx"
             android:textAllCaps="true"
@@ -24,6 +24,7 @@
             android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_pidana_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

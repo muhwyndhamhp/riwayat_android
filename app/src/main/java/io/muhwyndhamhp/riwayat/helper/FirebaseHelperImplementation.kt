@@ -20,14 +20,23 @@ import java.io.File
 import java.util.*
 
 class FirebaseHelperImplementation : FirebaseHelper {
-    private lateinit var database: DatabaseReference
 
-    private fun initDatabase(): DatabaseReference {
-        if (!this::database.isInitialized) {
-            val firebaseDatabase = Firebase.database
-            database = firebaseDatabase.reference
+
+    companion object{
+
+        private lateinit var database: DatabaseReference
+        private fun initDatabase(): DatabaseReference {
+            if (!this::database.isInitialized) {
+                Firebase.database.setPersistenceEnabled(true)
+                Firebase.database.setPersistenceCacheSizeBytes(41943040)
+                val firebaseDatabase = Firebase.database
+                database = firebaseDatabase.reference
+            }
+            return database
         }
-        return database
+    }
+    fun enablePersistence(){
+        initDatabase()
     }
 
     override fun uploadMember(member: Member): MutableLiveData<Constants.Companion.FirebaseUploadStatus> {

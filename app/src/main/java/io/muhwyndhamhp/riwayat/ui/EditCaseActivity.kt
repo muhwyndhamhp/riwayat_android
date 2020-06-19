@@ -19,8 +19,6 @@ import com.michaldrabik.classicmaterialtimepicker.utilities.setOnDatePickedListe
 import com.michaldrabik.classicmaterialtimepicker.utilities.setOnTime24PickedListener
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.model.Case
-import io.muhwyndhamhp.riwayat.model.CaseNote
-import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_ADDRESS
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LAT
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LONG
@@ -34,12 +32,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-
-    private var saksiCounter = 1
-    private lateinit var latLong: LatLng
-    private lateinit var currentMember: Member
-    private lateinit var currentCase: Case
-    private var currentCaseNotes = mutableMapOf<String, CaseNote>()
 
     private var editCaseViewModel: InputCaseViewModel? = null
 
@@ -64,39 +56,45 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
 
         editCaseViewModel!!.getCase(nomorLp)!!.observe(this, Observer {
             if (it != null) {
-                currentCase = it
+                editCaseViewModel!!.currentCase.value = it
                 inflateCaseToUI()
             }
         })
 
         editCaseViewModel!!.getCaseNotes(nomorLp)!!.observe(this, Observer {
+            val currentCaseNotes = editCaseViewModel!!.currentCaseNotes.value!!
             for (caseNote in it) {
                 currentCaseNotes[caseNote.timestamp.toString()] = caseNote
             }
+            editCaseViewModel!!.currentCaseNotes.value = currentCaseNotes
         })
     }
 
     private fun inflateCaseToUI() {
-        et_nomor_lp.setText(currentCase.nomorLP.replace("-", "/"))
-        et_nama_pelapor.setText(currentCase.namaPelapor)
-        et_hp_pelapor.setText(currentCase.hpPelapor)
-        et_alamat_pelapor.setText(currentCase.alamatPelapor)
-        et_waktu_kejadian.setText(parseTimestampFromString(currentCase.waktuKejadian))
-        et_lokasi_kejadian.setText(currentCase.lokasiKejadian)
-        latLong = LatLng(
-            currentCase.latLongKejadian.substringAfter("(").substringBefore(",").toDouble(),
-            currentCase.latLongKejadian.substringAfter(",").substringBefore(")").toDouble()
-        )
-        operator_spinner.setSelection(findSelectedSpinnerPosition())
-        et_lac_cid.setText(currentCase.lacCid.substringAfter("-"))
-        pidana_spinner.setSelection(findSelectedPidanaSpinnerPosition())
-        if (pidana_spinner.selectedItemPosition == 5) et_pidana_lain.setText(currentCase.tindakPidana)
-        setDaftarSaksi()
-        et_hasil_lidik.setText(currentCase.hasilLidik)
+        editCaseViewModel!!.getCase().observe(this, Observer { currentCase ->
+            et_nomor_lp.setText(currentCase.nomorLP.replace("-", "/"))
+            et_nama_pelapor.setText(currentCase.namaPelapor)
+            et_hp_pelapor.setText(currentCase.hpPelapor)
+            et_alamat_pelapor.setText(currentCase.alamatPelapor)
+            et_waktu_kejadian.setText(parseTimestampFromString(currentCase.waktuKejadian))
+            et_lokasi_kejadian.setText(currentCase.lokasiKejadian)
+            if(currentCase.latLongKejadian.isNotEmpty())
+            editCaseViewModel!!.latLong.value = LatLng(
+                currentCase.latLongKejadian.substringAfter("(").substringBefore(",").toDouble(),
+                currentCase.latLongKejadian.substringAfter(",").substringBefore(")").toDouble()
+            )
+            operator_spinner.setSelection(findSelectedSpinnerPosition())
+            et_lac_cid.setText(currentCase.lacCid.substringAfter("-"))
+            pidana_spinner.setSelection(findSelectedPidanaSpinnerPosition())
+            if (pidana_spinner.selectedItemPosition == 5) et_pidana_lain.setText(currentCase.tindakPidana)
+            setDaftarSaksi()
+            et_hasil_lidik.setText(currentCase.hasilLidik)
+        })
+
     }
 
     private fun setDaftarSaksi() {
-        val daftarSaksi = currentCase.daftarSaksi
+        val daftarSaksi = editCaseViewModel!!.currentCase.value!!.daftarSaksi
 
         val saksiETLList = listOf(et_saksi_1, et_saksi_2, et_saksi_3, et_saksi_4, et_saksi_5)
         val saksiTILList = listOf(til_saksi_1, til_saksi_2, til_saksi_3, til_saksi_4, til_saksi_5)
@@ -105,29 +103,31 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 saksiETLList[i].setText(daftarSaksi[i])
                 saksiTILList[i].visibility = View.VISIBLE
                 if (i == 4) ib_add_saksi.visibility = View.GONE
-                saksiCounter = daftarSaksi.size
+                editCaseViewModel!!.saksiCounter.value = daftarSaksi.size
             }
         }
     }
 
-    private fun findSelectedPidanaSpinnerPosition() = when (currentCase.tindakPidana) {
-        "Pembunuhan" -> 0
-        "Curat" -> 1
-        "Curas" -> 2
-        "Penganiayaan" -> 3
-        "Curanmor" -> 4
-        else -> 5
-    }
+    private fun findSelectedPidanaSpinnerPosition() =
+        when (editCaseViewModel!!.currentCase.value!!.tindakPidana) {
+            "Pembunuhan" -> 0
+            "Curat" -> 1
+            "Curas" -> 2
+            "Penganiayaan" -> 3
+            "Curanmor" -> 4
+            else -> 5
+        }
 
 
-    private fun findSelectedSpinnerPosition() = when (currentCase.lacCid.substringBefore("-")) {
-        "51010" -> 0
-        "51001" -> 1
-        "51011" -> 2
-        "51089" -> 3
-        "51009" -> 4
-        else -> 0
-    }
+    private fun findSelectedSpinnerPosition() =
+        when (editCaseViewModel!!.currentCase.value!!.lacCid.substringBefore("-")) {
+            "51010" -> 0
+            "51001" -> 1
+            "51011" -> 2
+            "51089" -> 3
+            "51009" -> 4
+            else -> 0
+        }
 
     @SuppressLint("SimpleDateFormat")
     private fun parseTimestampFromString(waktuKejadian: Long): String {
@@ -138,8 +138,7 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     }
 
     private fun fetchInitialUser() {
-        editCaseViewModel!!.getCurrentMember()!!.observe(this, Observer {
-            currentMember = it
+        editCaseViewModel!!.getMember()!!.observe(this, Observer {
             fetchAndSetInitialData()
         })
     }
@@ -168,7 +167,8 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             val lokasiKejadian = if (et_lokasi_kejadian.text.toString().trim { it <= ' ' }
                     .isNotEmpty()) et_lokasi_kejadian.text.toString() else null
 
-            val latLongKejadian = if (::latLong.isInitialized) latLong.toString() else ""
+            val latLong = editCaseViewModel!!.latLong.value
+            val latLongKejadian = latLong?.toString() ?: ""
 
             val lacCid =
                 if (et_lac_cid.text.toString().trim { it <= ' ' }.isNotEmpty()) parseLacCid(
@@ -207,9 +207,9 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                     tindakPidana,
                     daftarSaksi,
                     hasilLidik,
-                    currentMember.memberName,
+                    editCaseViewModel!!.currentMember.value!!.memberName,
                     System.currentTimeMillis(),
-                    currentCaseNotes
+                    editCaseViewModel!!.currentCaseNotes.value!!
                 )
 
                 editCaseViewModel!!.insertCase(case)
@@ -309,7 +309,8 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 val locationAddress = data.getStringExtra(LOCATION_ADDRESS)
 
                 et_lokasi_kejadian.setText(if (locationName != null && locationName.length < 5) locationAddress else "$locationName, $locationAddress")
-                latLong = LatLng(locationLat.toDouble(), locationLong.toDouble())
+                editCaseViewModel!!.latLong.value =
+                    LatLng(locationLat.toDouble(), locationLong.toDouble())
             }
         }
     }
@@ -317,10 +318,12 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     private fun initiateSaksiAdditionButton() {
         val saksiTILList = listOf(til_saksi_1, til_saksi_2, til_saksi_3, til_saksi_4, til_saksi_5)
         ib_add_saksi.setOnClickListener {
-            if (saksiCounter < 5) {
-                saksiTILList[saksiCounter].visibility = View.VISIBLE
-                saksiCounter++
-                if (saksiCounter >= 5) ib_add_saksi.visibility = View.GONE
+            if (editCaseViewModel!!.saksiCounter.value!! < 5) {
+                saksiTILList[editCaseViewModel!!.saksiCounter.value!!].visibility = View.VISIBLE
+                editCaseViewModel!!.saksiCounter.value =
+                    editCaseViewModel!!.saksiCounter.value!! + 1
+                if (editCaseViewModel!!.saksiCounter.value!! >= 5) ib_add_saksi.visibility =
+                    View.GONE
             }
         }
     }

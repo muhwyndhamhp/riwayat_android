@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/tv_nomor_lp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:maxWidth="220dp"
@@ -36,6 +36,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="21sp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_pidana_icon"
             app:layout_constraintTop_toBottomOf="@id/tv_title_card" />
 
         <TextView

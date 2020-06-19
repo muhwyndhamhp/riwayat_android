@@ -54,7 +54,7 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     private fun fetchInitialUser() {
-        inputCaseViewModel!!.getCurrentMember()!!.observe(this, Observer {
+        inputCaseViewModel!!.getMember()!!.observe(this, Observer {
             currentMember = it
         })
     }

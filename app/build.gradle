@@ -8,6 +8,8 @@ apply plugin: 'com.google.gms.google-services'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'com.google.firebase.crashlytics'
+
 
 android {
     signingConfigs {
@@ -52,6 +54,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx:19.3.0'
 
     implementation 'com.google.firebase:firebase-storage-ktx:19.1.1'
+
+    // Recommended: Add the Firebase SDK for Google Analytics.
+    implementation 'com.google.firebase:firebase-analytics:17.4.3'
+
+    // Add the Firebase Crashlytics SDK.
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
 
     implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
 

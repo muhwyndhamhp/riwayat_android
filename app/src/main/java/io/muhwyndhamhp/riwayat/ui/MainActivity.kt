@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.muhwyndhamhp.riwayat.R
+import io.muhwyndhamhp.riwayat.helper.FirebaseHelperImplementation
 import io.muhwyndhamhp.riwayat.repository.AppRepository
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.RC_SIGN_IN
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,8 +22,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Firebase.database.setPersistenceEnabled(true)
-        Firebase.database.setPersistenceCacheSizeBytes(41943040)
+        FirebaseHelperImplementation().enablePersistence()
         prepareFirebaseUI()
     }
 
