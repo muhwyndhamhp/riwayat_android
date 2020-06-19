@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.github.farhad.contactpicker.ContactPicker
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.adapter.MemberRVAdapter
 import io.muhwyndhamhp.riwayat.model.Member
@@ -28,7 +29,7 @@ class ManageMemberActivity : AppCompatActivity() {
         bt_input_member.setOnClickListener {
             manageMemberViewModel?.insertMember(
                 et_member_name.text.toString(),
-                et_member_phone.text.toString()
+                et_member_phone.text.toString().replace("+62", "0")
             )?.observe(this@ManageMemberActivity, Observer { insertStatus ->
                 when (insertStatus) {
                     Constants.Companion.FirebaseUploadStatus.COMPLETED -> setPostInsertedState()
@@ -43,6 +44,22 @@ class ManageMemberActivity : AppCompatActivity() {
         manageMemberViewModel?.getMemberList()?.observe(this, Observer { memberList ->
             renderMember(memberList)
         })
+
+        bt_select_contact.setOnClickListener {
+            val picker: ContactPicker? = ContactPicker.create(
+                activity = this,
+                onContactPicked = {
+                    et_member_name.setText(it.name)
+                    et_member_phone.setText(
+                        it.number.replace("+62", "0").replace("-", "").replace(" ", "")
+                    )
+                },
+                onFailure = {
+                    showToast("Tidak ada kontak yang dipilih!")
+                })
+
+            picker?.pick()
+        }
     }
 
     private fun setPostInsertedState() {

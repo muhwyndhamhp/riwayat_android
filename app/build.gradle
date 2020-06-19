@@ -10,6 +10,14 @@ apply plugin: 'kotlin-kapt'
 
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\ASUS\\Documents\\Keystores\\riwayat.jks')
+            storePassword 'RabbiZidniIlm4'
+            keyAlias 'key0'
+            keyPassword 'RabbiZidniIlm4'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
@@ -24,6 +32,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -74,4 +83,6 @@ dependencies {
     implementation 'id.zelory:compressor:3.0.0'
 
     implementation 'com.github.stfalcon:stfalcon-imageviewer:1.0.1'
+
+    implementation 'io.github.farhad:contactpicker:2.0.0'
 }
