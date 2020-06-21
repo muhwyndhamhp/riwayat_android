@@ -327,7 +327,7 @@
                     android:paddingTop="10dp"
                     android:paddingEnd="30dp"
                     android:paddingBottom="10dp"
-                    android:text="Tambah Catatan"
+                    android:text="Simpan"
                     android:textColor="@color/white" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

@@ -1,15 +1,22 @@
 package io.muhwyndhamhp.riwayat.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.content.Context
+import android.graphics.Bitmap
+import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.size
 import io.muhwyndhamhp.riwayat.model.Case
 import io.muhwyndhamhp.riwayat.model.CaseNote
 import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.repository.AppRepository
+import io.muhwyndhamhp.riwayat.ui.InputCaseActivity
+import kotlinx.coroutines.launch
+import java.io.File
 
 class InputCaseViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -37,5 +44,35 @@ class InputCaseViewModel(application: Application) : AndroidViewModel(applicatio
     fun getCase(nomorLp: String): LiveData<Case>? = repository.getCaseByNomorLp(nomorLp)
     fun getCase(): MutableLiveData<Case> {
         return currentCase
+    }
+
+    fun uploadImages(
+        imageLocalRefList: MutableList<String>,
+        context: Context,
+        lifecycleOwner: LifecycleOwner
+    ): MediatorLiveData<List<String>> {
+        val downloadURLMediator = MediatorLiveData<List<String>>()
+        (context as InputCaseActivity).lifecycleScope.launch {
+            val compressedImages = mutableListOf<File>()
+            for (string in imageLocalRefList) {
+                val imageFile = File(string)
+                val compressedImage = Compressor.compress(context, imageFile) {
+                    quality(60)
+                    size(204_800)
+                    format(Bitmap.CompressFormat.JPEG)
+                }
+                compressedImages.add(compressedImage)
+            }
+            val downloadURLs = mutableListOf<String>()
+            downloadURLMediator.addSource(repository.uploadImages(compressedImages)) { downloadURL ->
+                if (downloadURL.trim { it <= ' ' }.isNotEmpty()) {
+                    downloadURLs.add(downloadURL)
+                }
+                if (downloadURLs.size == compressedImages.size) {
+                    downloadURLMediator.postValue(downloadURLs)
+                }
+            }
+        }
+        return downloadURLMediator
     }
 }

@@ -22,5 +22,6 @@ data class Case(
     @ColumnInfo(name = "hasil_lidik") var hasilLidik: String = "",
     @ColumnInfo(name = "petugas") var petugas: String = "Anonim",
     @ColumnInfo(name = "timestamp") var timestamp: Long = 0L,
+    @ColumnInfo(name = "image_urls") var imageUrls: List<String> = mutableListOf(),
     @Ignore var caseNotes: Map<String, CaseNote> = mapOf<String, CaseNote>()
 )

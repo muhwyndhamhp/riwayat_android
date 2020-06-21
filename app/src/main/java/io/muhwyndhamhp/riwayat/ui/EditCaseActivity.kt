@@ -5,18 +5,22 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.model.LatLng
 import com.michaldrabik.classicmaterialtimepicker.CmtpDateDialogFragment
 import com.michaldrabik.classicmaterialtimepicker.CmtpTimeDialogFragment
 import com.michaldrabik.classicmaterialtimepicker.model.CmtpDate
 import com.michaldrabik.classicmaterialtimepicker.utilities.setOnDatePickedListener
 import com.michaldrabik.classicmaterialtimepicker.utilities.setOnTime24PickedListener
+import com.opensooq.supernova.gligar.GligarPicker
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.model.Case
+import io.muhwyndhamhp.riwayat.utils.Constants
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_ADDRESS
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LAT
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LONG
@@ -38,6 +42,10 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     private lateinit var operatorSpinnerList
             : MutableList<Spinner>
 
+    private var imageLocalRefList: MutableList<String> = mutableListOf()
+    private lateinit var ivList: List<ImageView>
+    private lateinit var ibList: List<ImageButton>
+
     private lateinit var lacCidEditTextList: MutableList<EditText>
     private val mLacCidList = mutableListOf<String>()
 
@@ -58,6 +66,9 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
         lacCidEditTextList =
             mutableListOf(et_lac_cid_1, et_lac_cid_2, et_lac_cid_3, et_lac_cid_4, et_lac_cid_5)
 
+        ivList = listOf(iv_1, iv_2, iv_3, iv_4, iv_5, iv_6)
+        ibList = listOf(ib_1, ib_2, ib_3, ib_4, ib_5, ib_6)
+
         fetchInitialUser()
 
         initiateSpinners()
@@ -66,6 +77,7 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
         initiateLocationPicker()
 
         initiateEditButtonListener()
+        initiateImagePicker()
     }
 
     private fun fetchAndSetInitialData() {
@@ -112,6 +124,8 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             if (pidana_spinner.selectedItemPosition == 5) et_pidana_lain.setText(currentCase.tindakPidana)
             setDaftarSaksi()
             et_hasil_lidik.setText(currentCase.hasilLidik)
+            imageLocalRefList.addAll(currentCase.imageUrls)
+            setImageAsset()
         })
 
     }
@@ -147,6 +161,31 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
         val date = Date(waktuKejadian)
 
         return format.format(date)
+    }
+
+    private fun initiateImagePicker() {
+        bt_add_image.setOnClickListener {
+            GligarPicker().requestCode(Constants.GLIGAR_PICKER).limit(6 - imageLocalRefList.size)
+                .withActivity(this).show()
+        }
+    }
+
+    private fun setImageAsset() {
+        if (imageLocalRefList.size == 6) bt_add_image.visibility = View.INVISIBLE
+        else bt_add_image.visibility = View.VISIBLE
+        for (i in imageLocalRefList.indices) {
+            Glide.with(this).load(imageLocalRefList[i])
+                .into(ivList[i])
+            ivList[i].visibility = View.VISIBLE
+            ibList[i].visibility = View.VISIBLE
+            ibList[i].setOnClickListener {
+                imageLocalRefList.removeAt(i)
+                ivList[imageLocalRefList.lastIndex + 1].visibility = View.GONE
+                ibList[imageLocalRefList.lastIndex + 1].visibility = View.GONE
+                setImageAsset()
+            }
+        }
+
     }
 
     private fun fetchInitialUser() {
@@ -212,25 +251,61 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 val toast = Toast.makeText(this, "Kolom tidak boleh kosong!", Toast.LENGTH_LONG)
                 toast.show()
             } else {
-                val case = Case(
-                    nomorLp,
-                    namaPelapor,
-                    nomorHpPelapor,
-                    alamatPelapor,
-                    waktuKejadian,
-                    latLongKejadian,
-                    lokasiKejadian,
-                    mLacCidList,
-                    tindakPidana,
-                    daftarSaksi,
-                    hasilLidik,
-                    editCaseViewModel!!.currentMember.value!!.memberName,
-                    System.currentTimeMillis(),
-                    editCaseViewModel!!.currentCaseNotes.value!!
-                )
+                window.setFlags(
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                progress_upload.visibility = View.VISIBLE
 
-                editCaseViewModel!!.insertCase(case)
-                finish()
+                if (imageLocalRefList.isNotEmpty()) {
+                    tv_process.text = "Mengupload gambar..."
+                    tv_process.visibility = View.VISIBLE
+                    editCaseViewModel!!.uploadImages(imageLocalRefList, this, this)
+                        .observe(this, Observer { downloadURLs ->
+                            tv_process.text = "Menambahkan catatan..."
+                            tv_process.visibility = View.VISIBLE
+                            val case = Case(
+                                nomorLp,
+                                namaPelapor,
+                                nomorHpPelapor,
+                                alamatPelapor,
+                                waktuKejadian,
+                                latLongKejadian,
+                                lokasiKejadian,
+                                mLacCidList,
+                                tindakPidana,
+                                daftarSaksi,
+                                hasilLidik,
+                                editCaseViewModel!!.currentMember.value!!.memberName,
+                                System.currentTimeMillis(),
+                                downloadURLs
+                            )
+
+                            editCaseViewModel!!.insertCase(case)
+                            finish()
+
+                        })
+                } else {
+                    tv_process.text = "Menambahkan catatan..."
+                    tv_process.visibility = View.VISIBLE
+                    val case = Case(
+                        nomorLp,
+                        namaPelapor,
+                        nomorHpPelapor,
+                        alamatPelapor,
+                        waktuKejadian,
+                        latLongKejadian,
+                        lokasiKejadian,
+                        mLacCidList,
+                        tindakPidana,
+                        daftarSaksi,
+                        hasilLidik,
+                        editCaseViewModel!!.currentMember.value!!.memberName,
+                        System.currentTimeMillis()
+                    )
+
+                    editCaseViewModel!!.insertCase(case)
+                    finish()
+                }
             }
         }
     }
@@ -314,6 +389,18 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 et_lokasi_kejadian.setText(if (locationName != null && locationName.length < 5) locationAddress else "$locationName, $locationAddress")
                 editCaseViewModel!!.latLong.value =
                     LatLng(locationLat.toDouble(), locationLong.toDouble())
+            }
+        }
+        if (requestCode == Constants.GLIGAR_PICKER) {
+            if (resultCode == Activity.RESULT_OK) {
+                val imagesList = data?.extras!!.getStringArray(GligarPicker.IMAGES_RESULT)
+                if (!imagesList.isNullOrEmpty()) {
+                    imageLocalRefList.addAll(imagesList.toList())
+
+                    if (imageLocalRefList.isNotEmpty()) {
+                        setImageAsset()
+                    }
+                }
             }
         }
     }

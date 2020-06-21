@@ -5,19 +5,23 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.model.LatLng
 import com.michaldrabik.classicmaterialtimepicker.CmtpDateDialogFragment
 import com.michaldrabik.classicmaterialtimepicker.CmtpTimeDialogFragment
 import com.michaldrabik.classicmaterialtimepicker.model.CmtpDate
 import com.michaldrabik.classicmaterialtimepicker.utilities.setOnDatePickedListener
 import com.michaldrabik.classicmaterialtimepicker.utilities.setOnTime24PickedListener
+import com.opensooq.supernova.gligar.GligarPicker
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.model.Case
 import io.muhwyndhamhp.riwayat.model.Member
+import io.muhwyndhamhp.riwayat.utils.Constants
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_ADDRESS
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LAT
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LONG
@@ -26,6 +30,21 @@ import io.muhwyndhamhp.riwayat.utils.Constants.Companion.RC_LOCATION_PICKER
 import io.muhwyndhamhp.riwayat.viewmodel.InputCaseViewModel
 import kotlinx.android.synthetic.main.activity_input_case.*
 import kotlinx.android.synthetic.main.case_form_layout.*
+import kotlinx.android.synthetic.main.case_form_layout.bt_add_image
+import kotlinx.android.synthetic.main.case_form_layout.ib_1
+import kotlinx.android.synthetic.main.case_form_layout.ib_2
+import kotlinx.android.synthetic.main.case_form_layout.ib_3
+import kotlinx.android.synthetic.main.case_form_layout.ib_4
+import kotlinx.android.synthetic.main.case_form_layout.ib_5
+import kotlinx.android.synthetic.main.case_form_layout.ib_6
+import kotlinx.android.synthetic.main.case_form_layout.iv_1
+import kotlinx.android.synthetic.main.case_form_layout.iv_2
+import kotlinx.android.synthetic.main.case_form_layout.iv_3
+import kotlinx.android.synthetic.main.case_form_layout.iv_4
+import kotlinx.android.synthetic.main.case_form_layout.iv_5
+import kotlinx.android.synthetic.main.case_form_layout.iv_6
+import kotlinx.android.synthetic.main.case_form_layout.progress_upload
+import kotlinx.android.synthetic.main.case_form_layout.tv_process
 import java.text.SimpleDateFormat
 
 class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -33,6 +52,10 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private var saksiCounter = 1
     private lateinit var latLong: LatLng
     private lateinit var currentMember: Member
+
+    private var imageLocalRefList: MutableList<String> = mutableListOf()
+    private lateinit var ivList: List<ImageView>
+    private lateinit var ibList: List<ImageButton>
 
     private var inputCaseViewModel: InputCaseViewModel? = null
 
@@ -59,13 +82,42 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         lacCidEditTextList =
             mutableListOf(et_lac_cid_1, et_lac_cid_2, et_lac_cid_3, et_lac_cid_4, et_lac_cid_5)
 
+        ivList = listOf(iv_1, iv_2, iv_3, iv_4, iv_5, iv_6)
+        ibList = listOf(ib_1, ib_2, ib_3, ib_4, ib_5, ib_6)
+
         fetchInitialUser()
         initiateSpinners()
         initiateSaksiAdditionButton()
         initiateDateTimePicker()
         initiateLocationPicker()
+        initiateImagePicker()
 
         initiateInputButtonListener()
+    }
+
+    private fun initiateImagePicker() {
+        bt_add_image.setOnClickListener {
+            GligarPicker().requestCode(Constants.GLIGAR_PICKER).limit(6 - imageLocalRefList.size)
+                .withActivity(this).show()
+        }
+    }
+
+    private fun setImageAsset() {
+        if (imageLocalRefList.size == 6) bt_add_image.visibility = View.INVISIBLE
+        else bt_add_image.visibility = View.VISIBLE
+        for (i in imageLocalRefList.indices) {
+            Glide.with(this).load(imageLocalRefList[i])
+                .into(ivList[i])
+            ivList[i].visibility = View.VISIBLE
+            ibList[i].visibility = View.VISIBLE
+            ibList[i].setOnClickListener {
+                imageLocalRefList.removeAt(i)
+                ivList[imageLocalRefList.lastIndex + 1].visibility = View.GONE
+                ibList[imageLocalRefList.lastIndex + 1].visibility = View.GONE
+                setImageAsset()
+            }
+        }
+
     }
 
     private fun fetchInitialUser() {
@@ -131,24 +183,61 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 val toast = Toast.makeText(this, "Kolom tidak boleh kosong!", Toast.LENGTH_LONG)
                 toast.show()
             } else {
-                val case = Case(
-                    nomorLp,
-                    namaPelapor,
-                    nomorHpPelapor,
-                    alamatPelapor,
-                    waktuKejadian,
-                    latLongKejadian,
-                    lokasiKejadian,
-                    mLacCidList,
-                    tindakPidana,
-                    daftarSaksi,
-                    hasilLidik,
-                    currentMember.memberName,
-                    System.currentTimeMillis()
-                )
+                window.setFlags(
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                progress_upload.visibility = View.VISIBLE
 
-                inputCaseViewModel!!.insertCase(case)
-                finish()
+                if (imageLocalRefList.isNotEmpty()) {
+                    tv_process.text = "Mengupload gambar..."
+                    tv_process.visibility = View.VISIBLE
+                    inputCaseViewModel!!.uploadImages(imageLocalRefList, this, this)
+                        .observe(this, Observer { downloadURLs ->
+                            tv_process.text = "Menambahkan catatan..."
+                            tv_process.visibility = View.VISIBLE
+                            val case = Case(
+                                nomorLp,
+                                namaPelapor,
+                                nomorHpPelapor,
+                                alamatPelapor,
+                                waktuKejadian,
+                                latLongKejadian,
+                                lokasiKejadian,
+                                mLacCidList,
+                                tindakPidana,
+                                daftarSaksi,
+                                hasilLidik,
+                                currentMember.memberName,
+                                System.currentTimeMillis(),
+                                downloadURLs
+                            )
+
+                            inputCaseViewModel!!.insertCase(case)
+                            finish()
+
+                        })
+                } else {
+                    tv_process.text = "Menambahkan catatan..."
+                    tv_process.visibility = View.VISIBLE
+                    val case = Case(
+                        nomorLp,
+                        namaPelapor,
+                        nomorHpPelapor,
+                        alamatPelapor,
+                        waktuKejadian,
+                        latLongKejadian,
+                        lokasiKejadian,
+                        mLacCidList,
+                        tindakPidana,
+                        daftarSaksi,
+                        hasilLidik,
+                        currentMember.memberName,
+                        System.currentTimeMillis()
+                    )
+
+                    inputCaseViewModel!!.insertCase(case)
+                    finish()
+                }
             }
         }
     }
@@ -231,6 +320,18 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
                 et_lokasi_kejadian.setText(if (locationName != null && locationName.length < 5) locationAddress else "$locationName, $locationAddress")
                 latLong = LatLng(locationLat.toDouble(), locationLong.toDouble())
+            }
+        }
+        if (requestCode == Constants.GLIGAR_PICKER) {
+            if (resultCode == Activity.RESULT_OK) {
+                val imagesList = data?.extras!!.getStringArray(GligarPicker.IMAGES_RESULT)
+                if (!imagesList.isNullOrEmpty()) {
+                    imageLocalRefList.addAll(imagesList.toList())
+
+                    if (imageLocalRefList.isNotEmpty()) {
+                        setImageAsset()
+                    }
+                }
             }
         }
     }
