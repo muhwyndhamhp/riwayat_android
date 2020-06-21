@@ -118,7 +118,8 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 currentCase.lacCid[i].substring(startIndex = 6)
             }
             for (i in currentCase.lacCid.indices) {
-
+                lacCidEditTextList[i].setText(currentCase.lacCid[i].substring(startIndex = 7))
+                operatorSpinnerList[i].setSelection(findSelectedSpinnerPosition(currentCase.lacCid[i]))
             }
             pidana_spinner.setSelection(findSelectedPidanaSpinnerPosition())
             if (pidana_spinner.selectedItemPosition == 5) et_pidana_lain.setText(currentCase.tindakPidana)
