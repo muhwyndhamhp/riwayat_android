@@ -15,9 +15,8 @@ data class Case(
     @ColumnInfo(name = "waktu_kejadian") var waktuKejadian: Long = 0L,
     @ColumnInfo(name = "latlong_kejadian") var latLongKejadian: String = "",
     @ColumnInfo(name = "lokasi_kejadian") var lokasiKejadian: String = "",
-    @ColumnInfo(name = "lac_cid") var lacCid: String = "",
+    @ColumnInfo(name = "lac_cid") var lacCid: List<String> = mutableListOf(),
     @ColumnInfo(name = "tindak_pidana") var tindakPidana: String = "",
-//    @TypeConverters(Converters::class)
     @ColumnInfo(name = "daftar_saksi")
     var daftarSaksi: List<String> = mutableListOf(),
     @ColumnInfo(name = "hasil_lidik") var hasilLidik: String = "",

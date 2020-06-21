@@ -5,7 +5,9 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,12 +28,17 @@ class CaseDetailActivity : AppCompatActivity() {
 
     private lateinit var adapter: CaseNoteAdapter
 
+    private val mLacCidList = mutableListOf<TextView>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_case_detail)
 
         viewModel = ViewModelProvider(this).get(CaseDetailViewModel::class.java)
 
+        mLacCidList.addAll(
+            mutableListOf(tv_lac_cid_1, tv_lac_cid_2, tv_lac_cid_3, tv_lac_cid_4, tv_lac_cid_5)
+        )
         inflateInitialContent()
 
     }
@@ -67,7 +74,10 @@ class CaseDetailActivity : AppCompatActivity() {
         tv_lokasi_kejadian.setOnClickListener {
             navigateToMaps()
         }
-        tv_lac_cid.text = "LAC-CID: ${currentCase.lacCid}"
+        for (i in currentCase.lacCid.indices) {
+            mLacCidList[i].text = "LAC-CID : ${currentCase.lacCid[i]}"
+            mLacCidList[i].visibility = View.VISIBLE
+        }
         tv_petugas.text = "Petugas: ${currentCase.petugas}"
         iv_pidana_icon.setBackgroundResource(selectDrawable(currentCase.tindakPidana))
         bt_delete_case.setOnClickListener { dialogBuilder(this, currentCase) }

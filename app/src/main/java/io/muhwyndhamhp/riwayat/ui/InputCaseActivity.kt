@@ -5,9 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -38,11 +36,28 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private var inputCaseViewModel: InputCaseViewModel? = null
 
+    private lateinit var operatorSpinnerList
+            : MutableList<Spinner>
+
+    private lateinit var lacCidEditTextList: MutableList<EditText>
+    private val mLacCidList = mutableListOf<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_input_case)
 
         inputCaseViewModel = ViewModelProvider(this).get(InputCaseViewModel::class.java)
+
+        operatorSpinnerList = mutableListOf(
+            operator_spinner_1,
+            operator_spinner_2,
+            operator_spinner_3,
+            operator_spinner_4,
+            operator_spinner_5
+        )
+
+        lacCidEditTextList =
+            mutableListOf(et_lac_cid_1, et_lac_cid_2, et_lac_cid_3, et_lac_cid_4, et_lac_cid_5)
 
         fetchInitialUser()
         initiateSpinners()
@@ -85,10 +100,16 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
             val latLongKejadian = if (::latLong.isInitialized) latLong.toString() else ""
 
-            val lacCid =
-                if (et_lac_cid.text.toString().trim { it <= ' ' }.isNotEmpty()) parseLacCid(
-                    et_lac_cid.text.toString()
-                ) else null
+            for (i in lacCidEditTextList.indices) {
+                if (lacCidEditTextList[i].text.toString().trim { it <= ' ' }.isNotEmpty()) {
+                    mLacCidList.add(
+                        io.muhwyndhamhp.riwayat.utils.parseLacCid(
+                            operatorSpinnerList[i],
+                            lacCidEditTextList[i].text.toString()
+                        )
+                    )
+                }
+            }
 
             val tindakPidana = parseTindakPidana(et_pidana_lain.text.toString())
 
@@ -105,7 +126,7 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 alamatPelapor == null ||
                 waktuKejadian == null ||
                 lokasiKejadian == null ||
-                lacCid == null
+                mLacCidList.isEmpty()
             ) {
                 val toast = Toast.makeText(this, "Kolom tidak boleh kosong!", Toast.LENGTH_LONG)
                 toast.show()
@@ -118,7 +139,7 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                     waktuKejadian,
                     latLongKejadian,
                     lokasiKejadian,
-                    lacCid,
+                    mLacCidList,
                     tindakPidana,
                     daftarSaksi,
                     hasilLidik,
@@ -145,20 +166,6 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private fun parseTindakPidana(toString: String): String {
         return if (pidana_spinner.selectedItemPosition != 5) pidana_spinner.selectedItem.toString() else toString
-    }
-
-    private fun parseLacCid(toString: String): String {
-        var lacCid = ""
-        lacCid += when (operator_spinner.selectedItem) {
-            "T.sel" -> "51010"
-            "Isat" -> "51001"
-            "Xl/Axis" -> "51011"
-            "Tri" -> "51089"
-            "Smartfren" -> "51009"
-            else -> "00000"
-        }
-
-        return "$lacCid-$toString"
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -244,13 +251,16 @@ class InputCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         /**
          * Spinner for Operator's MIC
          */
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.operator_list,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            operator_spinner.adapter = adapter
+
+        for (spinner in operatorSpinnerList) {
+            ArrayAdapter.createFromResource(
+                this,
+                R.array.operator_list,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinner.adapter = adapter
+            }
         }
 
         /**

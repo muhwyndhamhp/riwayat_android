@@ -152,11 +152,52 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_waktu_kejadian" />
 
                     <TextView
-                        android:id="@+id/tv_lac_cid"
+                        android:id="@+id/tv_lac_cid_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="LAC-CID : 51010-xxxxxxx"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_lokasi_kejadian" />
+                    <TextView
+                        android:id="@+id/tv_lac_cid_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="LAC-CID : 51010-xxxxxxx"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_lokasi_kejadian" />
+                    <TextView
+                        android:id="@+id/tv_lac_cid_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="LAC-CID : 51010-xxxxxxx"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_lokasi_kejadian" />
+                    <TextView
+                        android:id="@+id/tv_lac_cid_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="LAC-CID : 51010-xxxxxxx"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_lokasi_kejadian" />
+                    <TextView
+                        android:id="@+id/tv_lac_cid_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="LAC-CID : 51010-xxxxxxx"
+                        android:visibility="gone"
                         android:textColor="@color/colorPrimary"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_lokasi_kejadian" />

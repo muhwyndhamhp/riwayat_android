@@ -195,31 +195,161 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <Spinner
-                        android:id="@+id/operator_spinner"
-                        style="@android:style/Widget.Material.Spinner.Underlined"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:orientation="vertical">
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        app:boxStrokeColor="@color/stroke_color">
+                        android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/et_lac_cid"
+                        <Spinner
+                            android:id="@+id/operator_spinner_1"
+                            style="@android:style/Widget.Material.Spinner.Underlined"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="No. CID"
-                            android:inputType="number"
-                            android:singleLine="true" />
+                            android:layout_marginTop="10dp"
+                            app:boxStrokeColor="@color/stroke_color">
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <EditText
+                                android:id="@+id/et_lac_cid_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="No. LAC-CID"
+                                android:inputType="phone"
+                                android:singleLine="true" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/operator_spinner_2"
+                            style="@android:style/Widget.Material.Spinner.Underlined"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            app:boxStrokeColor="@color/stroke_color">
+
+                            <EditText
+                                android:id="@+id/et_lac_cid_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="No. LAC-CID"
+                                android:inputType="phone"
+                                android:singleLine="true" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/operator_spinner_3"
+                            style="@android:style/Widget.Material.Spinner.Underlined"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            app:boxStrokeColor="@color/stroke_color">
+
+                            <EditText
+                                android:id="@+id/et_lac_cid_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="No. LAC-CID"
+                                android:inputType="phone"
+                                android:singleLine="true" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/operator_spinner_4"
+                            style="@android:style/Widget.Material.Spinner.Underlined"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            app:boxStrokeColor="@color/stroke_color">
+
+                            <EditText
+                                android:id="@+id/et_lac_cid_4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="No. LAC-CID"
+                                android:inputType="phone"
+                                android:singleLine="true" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/operator_spinner_5"
+                            style="@android:style/Widget.Material.Spinner.Underlined"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            app:boxStrokeColor="@color/stroke_color">
+
+                            <EditText
+                                android:id="@+id/et_lac_cid_5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="No. LAC-CID"
+                                android:inputType="phone"
+                                android:singleLine="true" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

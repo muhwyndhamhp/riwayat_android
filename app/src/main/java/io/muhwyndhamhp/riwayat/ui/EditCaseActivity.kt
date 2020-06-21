@@ -5,9 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +23,8 @@ import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_LONG
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.LOCATION_NAME
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.NOMOR_LP
 import io.muhwyndhamhp.riwayat.utils.Constants.Companion.RC_LOCATION_PICKER
+import io.muhwyndhamhp.riwayat.utils.findSelectedSpinnerPosition
+import io.muhwyndhamhp.riwayat.utils.parseLacCid
 import io.muhwyndhamhp.riwayat.viewmodel.InputCaseViewModel
 import kotlinx.android.synthetic.main.activity_edit_case.*
 import kotlinx.android.synthetic.main.case_form_layout.*
@@ -35,11 +35,28 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
 
     private var editCaseViewModel: InputCaseViewModel? = null
 
+    private lateinit var operatorSpinnerList
+            : MutableList<Spinner>
+
+    private lateinit var lacCidEditTextList: MutableList<EditText>
+    private val mLacCidList = mutableListOf<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_case)
 
         editCaseViewModel = ViewModelProvider(this).get(InputCaseViewModel::class.java)
+
+        operatorSpinnerList = mutableListOf(
+            operator_spinner_1,
+            operator_spinner_2,
+            operator_spinner_3,
+            operator_spinner_4,
+            operator_spinner_5
+        )
+
+        lacCidEditTextList =
+            mutableListOf(et_lac_cid_1, et_lac_cid_2, et_lac_cid_3, et_lac_cid_4, et_lac_cid_5)
 
         fetchInitialUser()
 
@@ -78,13 +95,19 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             et_alamat_pelapor.setText(currentCase.alamatPelapor)
             et_waktu_kejadian.setText(parseTimestampFromString(currentCase.waktuKejadian))
             et_lokasi_kejadian.setText(currentCase.lokasiKejadian)
-            if(currentCase.latLongKejadian.isNotEmpty())
-            editCaseViewModel!!.latLong.value = LatLng(
-                currentCase.latLongKejadian.substringAfter("(").substringBefore(",").toDouble(),
-                currentCase.latLongKejadian.substringAfter(",").substringBefore(")").toDouble()
-            )
-            operator_spinner.setSelection(findSelectedSpinnerPosition())
-            et_lac_cid.setText(currentCase.lacCid.substringAfter("-"))
+            if (currentCase.latLongKejadian.isNotEmpty())
+                editCaseViewModel!!.latLong.value = LatLng(
+                    currentCase.latLongKejadian.substringAfter("(").substringBefore(",").toDouble(),
+                    currentCase.latLongKejadian.substringAfter(",").substringBefore(")").toDouble()
+                )
+
+            for (i in currentCase.lacCid.indices) {
+                operatorSpinnerList[i].setSelection(findSelectedSpinnerPosition(currentCase.lacCid[i]))
+                currentCase.lacCid[i].substring(startIndex = 6)
+            }
+            for (i in currentCase.lacCid.indices) {
+
+            }
             pidana_spinner.setSelection(findSelectedPidanaSpinnerPosition())
             if (pidana_spinner.selectedItemPosition == 5) et_pidana_lain.setText(currentCase.tindakPidana)
             setDaftarSaksi()
@@ -116,17 +139,6 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             "Penganiayaan" -> 3
             "Curanmor" -> 4
             else -> 5
-        }
-
-
-    private fun findSelectedSpinnerPosition() =
-        when (editCaseViewModel!!.currentCase.value!!.lacCid.substringBefore("-")) {
-            "51010" -> 0
-            "51001" -> 1
-            "51011" -> 2
-            "51089" -> 3
-            "51009" -> 4
-            else -> 0
         }
 
     @SuppressLint("SimpleDateFormat")
@@ -170,11 +182,16 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             val latLong = editCaseViewModel!!.latLong.value
             val latLongKejadian = latLong?.toString() ?: ""
 
-            val lacCid =
-                if (et_lac_cid.text.toString().trim { it <= ' ' }.isNotEmpty()) parseLacCid(
-                    et_lac_cid.text.toString()
-                ) else null
-
+            for (i in lacCidEditTextList.indices) {
+                if (lacCidEditTextList[i].text.toString().trim { it <= ' ' }.isNotEmpty()) {
+                    mLacCidList.add(
+                        parseLacCid(
+                            operatorSpinnerList[i],
+                            lacCidEditTextList[i].text.toString()
+                        )
+                    )
+                }
+            }
             val tindakPidana = parseTindakPidana(et_pidana_lain.text.toString())
 
             val daftarSaksi = getDaftarSaksi()
@@ -190,7 +207,7 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 alamatPelapor == null ||
                 waktuKejadian == null ||
                 lokasiKejadian == null ||
-                lacCid == null
+                mLacCidList.isEmpty()
             ) {
                 val toast = Toast.makeText(this, "Kolom tidak boleh kosong!", Toast.LENGTH_LONG)
                 toast.show()
@@ -203,7 +220,7 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                     waktuKejadian,
                     latLongKejadian,
                     lokasiKejadian,
-                    lacCid,
+                    mLacCidList,
                     tindakPidana,
                     daftarSaksi,
                     hasilLidik,
@@ -231,20 +248,6 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
 
     private fun parseTindakPidana(toString: String): String {
         return if (pidana_spinner.selectedItemPosition != 5) pidana_spinner.selectedItem.toString() else toString
-    }
-
-    private fun parseLacCid(toString: String): String {
-        var lacCid = ""
-        lacCid += when (operator_spinner.selectedItem) {
-            "T.sel" -> "51010"
-            "Isat" -> "51001"
-            "Xl/Axis" -> "51011"
-            "Tri" -> "51089"
-            "Smartfren" -> "51009"
-            else -> "00000"
-        }
-
-        return "$lacCid-$toString"
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -333,13 +336,16 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
         /**
          * Spinner for Operator's MIC
          */
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.operator_list,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            operator_spinner.adapter = adapter
+
+        for (spinner in operatorSpinnerList) {
+            ArrayAdapter.createFromResource(
+                this,
+                R.array.operator_list,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinner.adapter = adapter
+            }
         }
 
         /**
