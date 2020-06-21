@@ -14,7 +14,6 @@ import io.muhwyndhamhp.riwayat.model.Case
 import io.muhwyndhamhp.riwayat.model.CaseNote
 import io.muhwyndhamhp.riwayat.model.Member
 import io.muhwyndhamhp.riwayat.repository.AppRepository
-import io.muhwyndhamhp.riwayat.ui.InputCaseActivity
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -56,9 +55,9 @@ class InputCaseViewModel(application: Application) : AndroidViewModel(applicatio
             val uploadedImages = mutableListOf<String>()
             val compressedImages = mutableListOf<File>()
             for (string in imageLocalRefList) {
-                if(string.contains("https")){
+                if (string.contains("https")) {
                     uploadedImages.add(string)
-                } else{
+                } else {
                     val imageFile = File(string)
                     val compressedImage = Compressor.compress(context, imageFile) {
                         quality(60)
@@ -70,14 +69,21 @@ class InputCaseViewModel(application: Application) : AndroidViewModel(applicatio
             }
             val downloadURLs = mutableListOf<String>()
             downloadURLs.addAll(uploadedImages)
-            downloadURLMediator.addSource(repository.uploadImages(compressedImages)) { downloadURL ->
-                if (downloadURL.trim { it <= ' ' }.isNotEmpty()) {
-                    downloadURLs.add(downloadURL)
-                }
-                if (downloadURLs.size == (uploadedImages.size + compressedImages.size)) {
-                    downloadURLMediator.postValue(downloadURLs)
+            if (downloadURLs.size == imageLocalRefList.size) {
+                downloadURLMediator.postValue(
+                    downloadURLs
+                )
+            } else {
+                downloadURLMediator.addSource(repository.uploadImages(compressedImages)) { downloadURL ->
+                    if (downloadURL.trim { it <= ' ' }.isNotEmpty()) {
+                        downloadURLs.add(downloadURL)
+                    }
+                    if (downloadURLs.size == (uploadedImages.size + compressedImages.size)) {
+                        downloadURLMediator.postValue(downloadURLs)
+                    }
                 }
             }
+
         }
         return downloadURLMediator
     }
