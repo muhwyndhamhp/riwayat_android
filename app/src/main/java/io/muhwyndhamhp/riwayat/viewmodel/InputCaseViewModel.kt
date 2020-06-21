@@ -52,23 +52,29 @@ class InputCaseViewModel(application: Application) : AndroidViewModel(applicatio
         lifecycleOwner: LifecycleOwner
     ): MediatorLiveData<List<String>> {
         val downloadURLMediator = MediatorLiveData<List<String>>()
-        (context as InputCaseActivity).lifecycleScope.launch {
+        lifecycleOwner.lifecycleScope.launch {
+            val uploadedImages = mutableListOf<String>()
             val compressedImages = mutableListOf<File>()
             for (string in imageLocalRefList) {
-                val imageFile = File(string)
-                val compressedImage = Compressor.compress(context, imageFile) {
-                    quality(60)
-                    size(204_800)
-                    format(Bitmap.CompressFormat.JPEG)
+                if(string.contains("https")){
+                    uploadedImages.add(string)
+                } else{
+                    val imageFile = File(string)
+                    val compressedImage = Compressor.compress(context, imageFile) {
+                        quality(60)
+                        size(204_800)
+                        format(Bitmap.CompressFormat.JPEG)
+                    }
+                    compressedImages.add(compressedImage)
                 }
-                compressedImages.add(compressedImage)
             }
             val downloadURLs = mutableListOf<String>()
+            downloadURLs.addAll(uploadedImages)
             downloadURLMediator.addSource(repository.uploadImages(compressedImages)) { downloadURL ->
                 if (downloadURL.trim { it <= ' ' }.isNotEmpty()) {
                     downloadURLs.add(downloadURL)
                 }
-                if (downloadURLs.size == compressedImages.size) {
+                if (downloadURLs.size == (uploadedImages.size + compressedImages.size)) {
                     downloadURLMediator.postValue(downloadURLs)
                 }
             }

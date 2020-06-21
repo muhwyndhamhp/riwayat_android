@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.stfalcon.imageviewer.StfalconImageViewer
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.adapter.CaseNoteAdapter
 import io.muhwyndhamhp.riwayat.model.Case
@@ -98,6 +100,18 @@ class CaseDetailActivity : AppCompatActivity() {
             val intent = Intent(this, InputNoteActivity::class.java)
             intent.putExtra(NOMOR_LP, currentCase.nomorLP)
             startActivity(intent)
+        }
+
+        val ivList = listOf(iv_1, iv_2, iv_3, iv_4, iv_5, iv_6)
+        val ccList = listOf(cc_1, cc_2, cc_3, cc_4, cc_5, cc_6)
+        for (i in currentCase.imageUrls.indices) {
+            Glide.with(this).load(currentCase.imageUrls[i]).into(ivList[i])
+            ccList[i].visibility = View.VISIBLE
+            ccList[i].setOnClickListener {
+                StfalconImageViewer.Builder<String>(this, currentCase.imageUrls) { view, imageUrl ->
+                    Glide.with(this).load(imageUrl).into(view)
+                }.withStartPosition(i).show()
+            }
         }
     }
 
