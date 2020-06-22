@@ -4,11 +4,12 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.stfalcon.imageviewer.StfalconImageViewer
 import io.muhwyndhamhp.riwayat.R
 import io.muhwyndhamhp.riwayat.model.Case
 import io.muhwyndhamhp.riwayat.ui.CaseDetailActivity
@@ -40,6 +41,25 @@ class CaseListRVAdapter(val context: Context, val caseList: MutableList<Case>) :
                 val intent = Intent(context, CaseDetailActivity::class.java)
                 intent.putExtra(NOMOR_LP, case.nomorLP)
                 (context as CaseListActivity).startActivity(intent)
+            }
+
+            if (case.imageUrls.isNotEmpty()) {
+                val a = itemView
+                val ivList = listOf(a.iv_1, a.iv_2, a.iv_3, a.iv_4, a.iv_5, a.iv_6)
+                val ccList = listOf(a.cc_1, a.cc_2, a.cc_3, a.cc_4, a.cc_5, a.cc_6)
+
+                for (i in case.imageUrls.indices) {
+                    Glide.with(context).load(case.imageUrls[i]).into(ivList[i])
+                    ccList[i].visibility = View.VISIBLE
+                    ccList[i].setOnClickListener {
+                        StfalconImageViewer.Builder<String>(
+                            context,
+                            case.imageUrls
+                        ) { view, imageUrl ->
+                            Glide.with(context).load(imageUrl).into(view)
+                        }.withStartPosition(i).show()
+                    }
+                }
             }
         }
 
