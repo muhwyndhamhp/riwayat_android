@@ -7,6 +7,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -70,6 +71,7 @@ class InputNoteActivity : AppCompatActivity() {
                     .isNotEmpty()) {
                 if (et_body_note.text.toString().trim { it <= ' ' }
                         .isNotEmpty() || imageLocalRefList.isNotEmpty()) {
+                    parent_scroll_view.fullScroll(ScrollView.FOCUS_UP)
                     window.setFlags(
                         WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                         WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);

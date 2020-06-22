@@ -252,6 +252,7 @@ class EditCaseActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 val toast = Toast.makeText(this, "Kolom tidak boleh kosong!", Toast.LENGTH_LONG)
                 toast.show()
             } else {
+                parent_scroll_view.fullScroll(ScrollView.FOCUS_UP)
                 window.setFlags(
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);

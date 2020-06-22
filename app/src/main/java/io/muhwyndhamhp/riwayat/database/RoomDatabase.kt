@@ -10,7 +10,7 @@ import io.muhwyndhamhp.riwayat.model.Case
 import io.muhwyndhamhp.riwayat.model.CaseNote
 import io.muhwyndhamhp.riwayat.model.Member
 
-@Database(entities = [Member::class, Case::class, CaseNote::class], version = 1, exportSchema = false)
+@Database(entities = [Member::class, Case::class, CaseNote::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class RoomDatabase : RoomDatabase() {
     abstract fun memberDao(): MemberDao
@@ -29,6 +29,7 @@ abstract class RoomDatabase : RoomDatabase() {
                         context.applicationContext,
                         io.muhwyndhamhp.riwayat.database.RoomDatabase::class.java, "room_database"
                     )
+                        .fallbackToDestructiveMigration()
                         .build()
                 }
             }
